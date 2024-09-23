@@ -16,9 +16,9 @@ const Dashboard = () => {
     else setIsCompany(true);
     e.preventDefault();
   };
-
+  
   return (
-    <div>
+    <div className='dash' style={{ backgroundImage: 'radial-gradient(circle 800px at 50% 50%, #134074, #00072d)' }}>
       <div className="head">
         <form action="POST" onSubmit={searchHandler} className='searchForm'>
           <input type="text" name="search" id="search" placeholder='Search company' value={Company} onChange={changeHandler}/>
