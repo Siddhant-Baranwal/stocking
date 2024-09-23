@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,8 +9,9 @@ body {
 }
 
 *{
+    font-family: Poppins;
     color: white;
-    text-shadow: 0 0 5px white;
+    text-shadow: 0 0 2px white;
     font-size: 1.5vw;
     padding: 0;
     margin: 0;
@@ -23,6 +26,7 @@ body {
     align-items: center;
     padding: 1vw;
     height: 5vw;
+    margin-bottom: 1vw;
 }
 
 #search{
@@ -31,7 +35,11 @@ body {
     padding: 5px;
     padding-left: 20px;
     border-radius: 5px;
-    margin: 37vw;
+    margin: 1vw 37vw;
+}
+
+.searchForm{
+    height: 5vw;
 }
 
 .userIcon{
@@ -46,10 +54,45 @@ body {
 .left{
     display: inline-block;
     width: 80vw;
+    padding: 1vw 0;
 }
 
 .right{
-    background-color: red;
+    border: 2px solid white;
     height: 80vh;
     width: 20vw;
+}
+
+.hello{
+    color: transparent;
+    text-align: center;
+    font-weight: bolder;
+    font-size: 3vw;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    text-shadow: none;
+    background: linear-gradient(90deg, #00FFFF, #FF0000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    transition: 1s;
+    display: block;
+}
+
+.card{
+    display: inline-block;
+}
+
+.card div{
+    margin: 2vw;
+    font-size: 1.25vw;
+    color: white;
+    text-shadow: none;
+    max-width: 15vw;
+    min-width: 300px;
+    height: 200px;
+    background-color: rgb(27, 27, 27);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2.5vw;
 }

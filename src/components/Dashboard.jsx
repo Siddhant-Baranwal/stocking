@@ -20,7 +20,7 @@ const Dashboard = () => {
   return (
     <div>
       <div className="head">
-        <form action="POST" onSubmit={searchHandler}>
+        <form action="POST" onSubmit={searchHandler} className='searchForm'>
           <input type="text" name="search" id="search" placeholder='Search company' value={Company} onChange={changeHandler}/>
         </form>
         <img src="/images/userIcon.png" alt="User" className='userIcon'/>
