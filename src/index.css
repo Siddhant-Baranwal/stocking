@@ -4,19 +4,23 @@
 @tailwind components;
 @tailwind utilities;
 
-/* body {
-    background-image: radial-gradient(circle, rgb(2, 2, 49), black);
-} */
+::-webkit-scrollbar{
+    display: none;
+}
 
-/* *{
+ *{
+    margin: 0;
+    padding: 0;
+ }
+ 
+.dash{
     font-family: Poppins;
     color: white;
     text-shadow: 0 0 2px white;
     font-size: 1.5vw;
-    padding: 0;
-    margin: 0;
     box-sizing: border-box;
-} */
+    min-height: 100vh;
+}
 
 .head{
     position: sticky;
