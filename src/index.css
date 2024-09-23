@@ -1,3 +1,56 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    background-image: radial-gradient(circle, rgb(2, 2, 49), black);
+}
+
+*{
+    color: white;
+    text-shadow: 0 0 5px white;
+    font-size: 1.5vw;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.head{
+    position: sticky;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1vw;
+    height: 5vw;
+}
+
+#search{
+    background-color: transparent;
+    border: 2px solid grey;
+    padding: 5px;
+    padding-left: 20px;
+    border-radius: 5px;
+    margin: 37vw;
+}
+
+.userIcon{
+    height: 80%;
+}
+
+.main{
+    display: flex;
+    flex-direction: row;
+}
+
+.left{
+    display: inline-block;
+    width: 80vw;
+    border: 2px solid white;
+}
+
+.right{
+    background-color: red;
+    height: 80vh;
+    width: 20vw;
+}
