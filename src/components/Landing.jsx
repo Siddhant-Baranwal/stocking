@@ -8,9 +8,10 @@ const Landing = () => {
   const toggleForm = () => {
     setIsLogin(!isLogin);
   };
-
+  
   return (
-    <div className="min-h-screen flex items-center justify-center font-poppins" style={{ backgroundImage: 'radial-gradient(circle 800px at 50% 50%, #134074, #00072d)' }}>
+    <div className="min-h-screen flex items-center justify-center font-poppins bg-[url('/bg.png')] bg-cover bg-center relative">
+      <div class="absolute inset-0 bg-gradient-to-r from-black/100 to-black/60"></div>
       {isLogin ? <Login toggleForm={toggleForm} /> : <Signup toggleForm={toggleForm} />}
     </div>
   );
