@@ -1,5 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom';
 
 const Login = ({ toggleForm }) => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -7,9 +8,9 @@ const Login = ({ toggleForm }) => {
     const onSubmit = (data) => {
         console.log(data);
     };
-
+    
     return (
-        <div className="rounded-lg border-white border-opacity-10 border-2 p-6 max-w-lg w-full backdrop-blur-lg shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+        <div className="rounded-lg border-white border-opacity-10 border-2 p-6 max-w-lg w-full backdrop-blur-lg shadow-[0_0_15px_rgba(255,255,255,0.2)] mx-4">
             <h2 className="text-2xl text-center mb-10 text-white font-bold">
                 Login to your account
             </h2>
@@ -55,7 +56,7 @@ const Login = ({ toggleForm }) => {
             </form>
 
             <div className="mt-4 flex justify-between text-sm mx-2">
-                <p className='text-zinc-300 underline hover:text-blue-500'> Forgot Password</p>
+                <p className='text-zinc-300 underline hover:text-blue-500'><Link to='/forgot-password'>Forgot Password</Link></p>
                 <p className="text-zinc-300">
                     Don't have an account?
                     <span
