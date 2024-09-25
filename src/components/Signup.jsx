@@ -9,7 +9,7 @@ const Signup = ({ toggleForm }) => {
     };
 
     return (
-        <div className="rounded-lg border-white border-opacity-10 border-2 p-6 max-w-lg w-full backdrop-blur-lg shadow-[0_0_15px_rgba(255,255,255,0.2)]">"
+        <div className="rounded-lg border-white border-opacity-10 border-2 p-6 max-w-lg w-full backdrop-blur-lg shadow-[0_0_15px_rgba(255,255,255,0.2)] mx-4">"
             <h2 className="text-2xl text-center mb-10 text-white font-bold">
                 Create a new account
             </h2>
@@ -76,7 +76,7 @@ const Signup = ({ toggleForm }) => {
                     </span>
                 </p>
             </div>
-
+            
             <div className="my-4 flex items-center">
                 <hr className="flex-grow border-t border-gray-300" />
                 <span className="px-4 text-gray-400">or</span>
