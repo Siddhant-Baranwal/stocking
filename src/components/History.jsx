@@ -6,7 +6,7 @@ const History = () => {
   const handleShowLinks = () => {
     setShowLinks(!showLinks);
   };
-  const [showSide, setShowSide] = useState(true);
+  const [showSide, setShowSide] = useState(window.innerWidth > 800);
   const handleShowSide = () => {
     setShowSide(!showSide);
   };
