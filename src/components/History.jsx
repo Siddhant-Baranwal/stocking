@@ -6,7 +6,7 @@ const History = () => {
   const handleShowLinks = () => {
     setShowLinks(!showLinks);
   };
-  const [showSide, setShowSide] = useState(false);
+  const [showSide, setShowSide] = useState(true);
   const handleShowSide = () => {
     setShowSide(!showSide);
   };
@@ -21,7 +21,7 @@ const History = () => {
   }
   return (
     <div className='right'>
-      <div className="viewSidebar sidetab" onClick={handleShowSide}>{showSide ? '×' : '☰'}</div>
+      <div className="viewSidebar sidetab" onClick={handleShowSide}>{showSide ? 'X' : '☰'}</div>
       {showSide && <div>
         <div className="sidetab"><Link to='/my'>My profile</Link></div>
         <div className="sidetab">Change password</div>
