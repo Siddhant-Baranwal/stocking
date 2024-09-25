@@ -23,8 +23,8 @@ const History = () => {
     <div className='right'>
       <div className="viewSidebar sidetab" onClick={handleShowSide}>{showSide ? 'X' : '☰'}</div>
       {showSide && <div>
-        <div className="sidetab"><Link to='/my'>My profile</Link></div>
-        <div className="sidetab">Change password</div>
+        <div className="sidetab"><Link to='/profile'>My profile</Link></div>
+        <div className="sidetab"><Link to='/change-password'>Change password</Link></div>
         <div className="sidetab" onClick={handleShowLinks}>History here <span>{showLinks ? '▲' : '▼'}</span> </div>
         {showLinks && links()}
       </div> }
