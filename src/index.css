@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Protest+Guerrilla&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -22,14 +23,14 @@
 }
 
 .head{
-    position: sticky;
-    top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 1vw;
     height: 5vw;
     margin-bottom: 1vw;
+    transition: 0.5s;
+    width: 75vw;
 }
 
 #search{
@@ -56,14 +57,15 @@
 
 .left{
     display: inline-block;
-    width: 80vw;
-    padding: 1vw 0;
+    width: 75vw;
+    padding: 2vw 5vw;
 }
 
 .right{
-    border: 2px solid white;
-    height: 80vh;
-    width: 20vw;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25vw;
 }
 
 .hello{
@@ -86,21 +88,86 @@
 
 .card div{
     margin: 2vw;
-    font-size: 1.25vw;
+    font-size: 2vw;
     color: white;
     text-shadow: none;
-    max-width: 15vw;
-    min-width: 300px;
-    height: 200px;
-    background-color: rgb(27, 27, 27);
+    width: 25vw;
+    height: 25vw;
+    background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(63, 63, 63));
     border-radius: 10px;
     display: flex;
     justify-content: center;
-    /* align-items: center; */
-    padding: 2.5vw;
+    padding: 4vw 2.5vw;
 }
 
 
 input:focus, textarea:focus, select:focus {
     outline: none;
+}
+
+.sidetab{
+    text-align: center;
+    width: 100%;
+    font-weight: bolder;
+    border: 2px solid white;
+    font-size: 2vw;
+    cursor: pointer;
+    padding: 0.2vw 0;
+}
+
+.historyList{
+    font-family: "Protest Guerrilla", sans-serif;
+    display: block;
+    text-shadow: none;
+    font-weight: 100;
+    font-size: 2vw;
+    padding: 0.1vw 2vw;
+    border: 2px solid white;
+}
+
+.historyList:hover{
+    text-decoration: underline;
+}
+
+.historyList:nth-child(odd) {
+    color: white;
+}
+
+.historyList:nth-child(even) {
+    color: black;
+    background-color: white;
+}
+
+.viewSidebar{
+    position: absolute;
+    right: 0;
+    width: 5vw;
+    display: none;
+    border: none;
+}
+
+@media (max-width: 800px) {
+    .viewSidebar {
+        display:block;
+        padding-right: 1vw;
+        padding-top: 0;
+        top: -1vw;
+        font-size: 5vw !important;
+    }
+    .head{
+        width: 100vw;
+    }
+    .right{
+        width: 350px;
+        background-color: rgb(47, 47, 47);
+    }
+    .sidetab{
+        font-size: 3vw;
+    }
+    .historyList{
+        font-size: 3vw;
+    }
+    .left{
+        width: 100vw;
+    }
 }

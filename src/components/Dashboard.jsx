@@ -23,7 +23,6 @@ const Dashboard = () => {
         <form action="POST" onSubmit={searchHandler} className='searchForm'>
           <input type="text" name="search" id="search" placeholder='Search company' value={Company} onChange={changeHandler}/>
         </form>
-        <img src="/images/userIcon.png" alt="User" className='userIcon'/>
       </div>
       <div className="main">
         {!isCompany && <div>
