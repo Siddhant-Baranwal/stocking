@@ -13,6 +13,7 @@ const Login = ({ toggleForm }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [OTP, setOtp] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const timeoutDuration = 60000; // 1 minute in milliseconds (60 seconds)
 
   // Function that returns a Promise and waits for the OTP to be entered
@@ -56,6 +57,7 @@ const Login = ({ toggleForm }) => {
   };
 
   const onSubmit = async (obj) => {
+    setIsLoading(true);
     try {
       // fetching the user in authentication db
       const UserinAdb = await connectUrl("signin", obj);
@@ -76,6 +78,8 @@ const Login = ({ toggleForm }) => {
             message: "2nd Verification done!",
             description: "Verified through QR succesfuly!",
           });
+          setIsLoading(false);
+
           navigate("/dashboard");
         } else {
           notification.error({
@@ -83,19 +87,21 @@ const Login = ({ toggleForm }) => {
           });
           console.log("hi");
           setIsModalOpen(false);
-          OTP = null;
+          setOtp(null);
+          setIsLoading(false);
         }
       } else {
         notification.error({
           message: "Invalid Credentials!",
           description: "Invalid Email/password  Retry!",
         });
+        setIsLoading(false);
       }
     } catch (error) {
       notification.error({
         message: "Error Occcured!",
-        description: error,
       });
+      setIsLoading(false);
     }
   };
 

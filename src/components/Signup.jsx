@@ -22,6 +22,7 @@ const Signup = ({ toggleForm }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [Code, setCode] = useState("");
   const [OTP, setOtp] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const timeoutDuration = 60000; // 1 minute in milliseconds (60 seconds)
 
@@ -86,6 +87,7 @@ const Signup = ({ toggleForm }) => {
   };
 
   const onSubmit = async (obj) => {
+    setIsLoading(true);
     try {
       // fetching the user in authentication db
       const UserinAdb = await connectUrl("signup", obj);
@@ -118,18 +120,23 @@ const Signup = ({ toggleForm }) => {
               message: "2nd Verification done!",
               description: "Verified through QR succesfuly!",
             });
+            setIsLoading(false);
             navigate("/dashboard");
           } else {
             notification.error({
               message: "QR Verification not done!",
               description: "Please verify QR properly!",
             });
+            setIsModalOpen(false);
+            setOtp(null);
+            setIsLoading(false);
           }
         } else {
           notification.error({
             message: "Verification not done!",
             description: "Please verify email properly!",
           });
+          setIsLoading(false);
         }
       } else {
         // User clicked "Cancel"
@@ -137,12 +144,13 @@ const Signup = ({ toggleForm }) => {
           message: "Verification not done!",
           description: "Please verify link sended in your email",
         });
+        setIsLoading(false);
       }
     } catch (error) {
       notification.error({
         message: "Error Occcured!",
-        description: error,
       });
+      setIsLoading(false);
     }
   };
 
@@ -235,7 +243,10 @@ const Signup = ({ toggleForm }) => {
           <span className="px-4 text-gray-400">or</span>
           <hr className="flex-grow border-t border-gray-300" />
         </div>
-        <button className="w-full bg-sky-950 border border-gray-500 text-gray-100 p-2 rounded-lg hover:bg-blue-900 transform duration-300 shadow-2xl font-semibold">
+        <button
+          disabled={isLoading}
+          className="w-full bg-sky-950 border border-gray-500 text-gray-100 p-2 rounded-lg hover:bg-blue-900 transform duration-300 shadow-2xl font-semibold"
+        >
           <span className="flex justify-center items-center gap-2">
             <img src="/google.svg" alt="Google Icon" />
             Continue with Google
