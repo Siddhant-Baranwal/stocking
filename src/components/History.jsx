@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const History = () => {
   const [showLinks, setShowLinks] = useState(false);
@@ -10,26 +10,47 @@ const History = () => {
   const handleShowSide = () => {
     setShowSide(!showSide);
   };
-  const companyList = ['Nestle', 'Mercedes', 'Apple', 'NVIDIA', 'Google', 'Reliance'];
+  const companyList = [
+    "Nestle",
+    "Mercedes",
+    "Apple",
+    "NVIDIA",
+    "Google",
+    "Reliance",
+  ];
   const links = () => {
-    if(companyList.length===0){
-      return <div className="historyList">No history...</div>
+    if (companyList.length === 0) {
+      return <div className="historyList">No history...</div>;
     }
-    return companyList.map(item => {
-      return <Link key={item} className='historyList' to={`/history/${item}`}>{item}</Link>
-    })
-  }
+    return companyList.map((item) => {
+      return (
+        <Link key={item} className="historyList" to={`/history/${item}`}>
+          {item}
+        </Link>
+      );
+    });
+  };
   return (
-    <div className='right'>
-      <div className="viewSidebar sidetab" onClick={handleShowSide}>{showSide ? 'X' : '☰'}</div>
-      {showSide && <div>
-        <div className="sidetab"><Link to='/profile'>My profile</Link></div>
-        <div className="sidetab"><Link to='/change-password'>Change password</Link></div>
-        <div className="sidetab" onClick={handleShowLinks}>History here <span>{showLinks ? '▲' : '▼'}</span> </div>
-        {showLinks && links()}
-      </div> }
+    <div className="right">
+      <div className="viewSidebar sidetab" onClick={handleShowSide}>
+        {showSide ? "X" : "☰"}
+      </div>
+      {showSide && (
+        <div>
+          <div className="sidetab">
+            <Link to="/profile">My profile</Link>
+          </div>
+          <div className="sidetab">
+            <Link to="/change-password">Change password</Link>
+          </div>
+          <div className="sidetab" onClick={handleShowLinks}>
+            History here <span>{showLinks ? "▲" : "▼"}</span>{" "}
+          </div>
+          {showLinks && links()}
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default History
+export default History;
