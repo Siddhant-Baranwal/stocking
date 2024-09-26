@@ -36,7 +36,6 @@ const Dashboard = () => {
             onChange={changeHandler}
           />
         </form>
-        <img src="/images/userIcon.png" alt="User" className="userIcon" />
       </div>
       <div className="main">
         {!isCompany && (
