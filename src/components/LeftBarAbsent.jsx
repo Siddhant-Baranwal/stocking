@@ -1,12 +1,15 @@
-import React from 'react'
+import React from "react";
 
 const LeftBarAbsent = () => {
   const user = "Siddhant";
   return (
-    <div className='left'>
+    <div className="left">
       <p className="hello">Hello, {user}</p>
       <div className="card">
-        <div>Get the detailed analysis of a company's stock using user-friendly graphs.</div>
+        <div>
+          Get the detailed analysis of a company's stock using user-friendly
+          graphs.
+        </div>
       </div>
       <div className="card">
         <div>Compare the stock with other companies in the same country.</div>
@@ -18,7 +21,7 @@ const LeftBarAbsent = () => {
         <div>Get future prediction about the stock price of the company.</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LeftBarAbsent
+export default LeftBarAbsent;
