@@ -5,6 +5,7 @@
 #### [Link for the backend](https://github.com/Siddhant-Baranwal/stocking-backend) repo of the project.
 
 ## Detailed Architecture - 
+![Architecture image](https://i.ibb.co/7gX9xpB/Untitled-Diagram-drawio.png)
 <!-- Image of detailed architecture -->
 
 ## List of services used -
