@@ -8,11 +8,11 @@ const ForgotPassword = () => {
     const onSubmit = (data) => {
         console.log(data);
     };
-
+    
     return (
         <div className="min-h-screen flex items-center justify-center font-poppins bg-[url('/bg.png')] bg-cover bg-center relative">
             <div className="absolute inset-0 bg-gradient-to-r from-black/100 to-black/65"></div>
-            <div className="rounded-lg border-white border-opacity-10 border-2 py-6 px-5 max-w-xl w-full backdrop-blur-lg shadow-[0_0_15px_rgba(255,255,255,0.2)] mx-4">
+            <div className="rounded-lg border-white border-opacity-10 border-2 py-6 px-5 max-w-xl w-full backdrop-blur-lg shadow-[0_0_15px_rgba(255,255,255,0.2)] mx-3">
                 <h2 className="text-2xl text-center mb-5 text-white font-bold">
                     Forgot Password
                 </h2>
