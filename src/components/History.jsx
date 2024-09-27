@@ -10,6 +10,14 @@ const History = () => {
   const handleShowSide = () => {
     setShowSide(!showSide);
   };
+  const deleteCookie = () => {
+    if (document.cookie.split(';').some((item) => item.trim().startsWith('token='))) {
+        document.cookie = 'token=; Max-Age=0; path=/;';
+        console.log("Cookie deleted");
+    } else {
+        console.log("Cookie does not exist");
+    }
+  };
   const companyList = [
     "Nestle",
     "Mercedes",
@@ -43,6 +51,8 @@ const History = () => {
           <div className="sidetab">
             <Link to="/change-password">Change password</Link>
           </div>
+          <div className="sidetab">Toggle theme</div>
+          <div className="sidetab" onClick={deleteCookie} >Log out</div>
           <div className="sidetab" onClick={handleShowLinks}>
             History here <span>{showLinks ? "▲" : "▼"}</span>{" "}
           </div>

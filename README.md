@@ -96,18 +96,18 @@
 - Customization
 - Responsive Design
 
-## Computation -
-- Companies in the same country:
-  Search in database where country is same as company's country.
-- Companies with greater diversity, stock price, market share, revenue and expense:
-  Search in database where the value is more than company's diversity.
-- Growth and stability of the company: 
-  Take the percentage difference between each consecutive year data and then average the values. If the net average is positive for return growth with the average percent, else decline with the average percent.
-
 ## Steps that we took to make our system extendible and accept actual real time computations :
 - Separate modular structure for frontend, backend and the database.
 - Well-defined and organized APIs, so that any future change is easy.
 - Firebase is used as it is very efficient and fast.
+
+## Computation -
+- Companies in the same country:
+  Search in database where country is same as company's country.
+- Companies with greater diversity, stock price, market share, revenue and expense:
+  Search in database where the value is more than company's data.
+- Growth and stability of the company: 
+  Take the percentage difference between each consecutive year data and then average the values. If the net average is positive for return growth with the average percent, else decline with the average percent.
 
 ## Predictive analysis: 
 - We are predicting the next year's data using the growth/decline value obtained from above computation on the last year's data.
