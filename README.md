@@ -1,13 +1,14 @@
 # Stocking 
 
-## Website for analyzing the stock price and performance of any company.
+#### Website for analyzing the stock price and performance of any company.
+#### This is the frontend of the project.
+#### [Link for the backend](https://github.com/Siddhant-Baranwal/stocking-backend) repo of the project.
 
 ## Detailed Architecture - 
 <!-- Image of detailed architecture -->
 
 ## List of services used -
-### Google Firebase - 
-##### Link: https://firebase.google.com/
+### [Google Firebase](https://firebase.google.com/) - 
 ##### Pricing: Free
 ###### Why it is the best fit:
 - Real-time database & firestore
@@ -20,11 +21,11 @@
 - MongoDB
 - Azure App Service
 
+---
+
 ### Deployment -
-#### Vercel for frontend
-#### Render for backend
-##### Link: https://render.com/
-##### Pricing: Free
+#### [Vercel](https://vercel.com/) for frontend |  [Render](https://render.com/) for backend
+##### Pricing: Free versions used (Paid versions are also available.)
 ##### Why it is the best fit: 
 - Simple and easy to use
 - Auto scaling of applications
@@ -38,8 +39,9 @@
 - Google Cloud Run
 - Dokku
 
-### Highchart -
-##### Link: https://www.highcharts.com/
+---
+
+### [HighCharts](https://www.highcharts.com/) -
 ##### Pricing: 
 - Free for personal, non-commercial use
 - Paid licenses for commercial use
@@ -54,29 +56,45 @@
 - Google charts
 - ApexCharts
 
+---
+
 ## Why do we think our architecture is scalable: 
-<!-- To-do -->
+- Our architecture leverages managed services that automatically scale with usage. Firebase offers real-time database and Firestore, which can handle millions of concurrent connections. Vercel and Render provide auto-scaling capabilities for both the frontend and backend, meaning the infrastructure dynamically adjusts to accommodate spikes in traffic without manual intervention. Additionally, Firebase's cloud functions are designed to scale automatically, reducing the need for complex server management.
+
+- We have also chosen to separate concerns by hosting the frontend and backend independently, allowing each to scale based on its specific load requirements. By utilizing high-performance databases and caching solutions such as Redis (offered by Render), we ensure that our application can handle increasing amounts of data and computation efficiently.
 
 ## Till what scale can we accommodate in a zero cost solution?
-<!-- To-do -->
+- At zero cost, we can handle moderate traffic and a significant number of database read/write operations, as Firebase and Render's free tiers provide generous limits. Firebase’s free tier allows up to 50,000 reads and writes per day for Firestore and 10 GB hosting storage. Render allows up to 750 hours of backend service runtime and 100 GB of bandwidth per month for free.
+
+- However, as our application grows, limitations in bandwidth, request quotas, and database storage might require us to shift to paid tiers or adopt optimizations to fit within the free limits.
 
 ## What would have we done differently in your architecture if a zero cost solution was not a requirement?
-<!-- To-do -->
+#### If budget constraints were not a consideration, we would have optimized for performance and reliability at a much larger scale. This would involve:
+- Upgrading to Firebase's Blaze plan, which offers pay-as-you-go pricing, higher usage limits, advanced features like Cloud Functions, and multi-region support.
+- Adding more real-time monitoring and logging solutions such as Datadog or Prometheus to manage system health.
+- Using advanced machine learning models hosted on services like AWS SageMaker or GCP AI Platform for predictive analytics.
 
 ## Steps taken to improve DX: 
-- Creating the project using ReactJS
+- Creating the project using [ReactJS](https://react.dev/)
 - Creating a good organized folder structure
-- Uploading the project as a GitHub repo so that it is easy for all members to access and changes the project.
+- Uploading the project as a [GitHub](https://github.com/) repo so that it is easy for all members to access and changes the project.
 
 ## Steps taken to improve UX:
-- Tailwind CSS and External CSS
-- Google Fonts
-- Interactive graphs using HighCharts
+- [Tailwind CSS](https://tailwindcss.com/) and External CSS
+- [Google Fonts](https://fonts.google.com/)
+- Interactive graphs using [HighCharts](https://www.highcharts.com/)
 - Use of peer focusing design technique.
+- Use of day/night theme.
 
 
 ## Data visualization -
-#### Data has been visualized in the form of graphs using HighCharts.
+#### HighCharts has been utilized for data visualization, allowing us to present complex data sets in a visually engaging and interactive format. We have chosen HighCharts due to its flexibility and comprehensive charting capabilities, which include line charts, bar charts, pie charts, scatter plots, and more. This enables us to effectively represent key performance indicators such as revenue growth, diversity metrics, market share, and stock prices for companies.
+
+- Interactive Charts
+- Dynamic Updates
+- Customization
+- Responsive Design
+
 ## Computation -
 - Companies in the same country:
   Search in database where country is same as company's country.
@@ -85,9 +103,12 @@
 - Growth and stability of the company: 
   Take the percentage difference between each consecutive year data and then average the values. If the net average is positive for return growth with the average percent, else decline with the average percent.
 
-<!-- What practices did you take to make your system extendible and accept actual real time computations ? -->
+## Steps that we took to make our system extendible and accept actual real time computations :
+- Separate modular structure for frontend, backend and the database.
+- Well-defined and organized APIs, so that any future change is easy.
+- Firebase is used as it is very efficient and fast.
 
-### Predictive analysis: 
-- We are predicting the next year's data using the growth/decline value obtained from above on the last year's data.
+## Predictive analysis: 
+- We are predicting the next year's data using the growth/decline value obtained from above computation on the last year's data.
 - We are currently researching for a better prediction method.
 <!-- More to be written by ChatGPT -->
