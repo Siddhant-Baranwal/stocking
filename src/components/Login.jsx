@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Modal, Space, Input, Typography, Flex, notification } from "antd";
 const { Title } = Typography;
+import { Link } from 'react-router-dom'
 
 const Login = ({ toggleForm }) => {
   const {
@@ -104,9 +105,9 @@ const Login = ({ toggleForm }) => {
       setIsLoading(false);
     }
   };
-
+  
   return (
-    <div className="rounded-lg border-white border-opacity-10 border-2 p-6 max-w-lg w-full backdrop-blur-lg shadow-[0_0_15px_rgba(255,255,255,0.2)]">
+    <div className="rounded-lg border-white border-opacity-10 border-2 p-6 max-w-lg w-full backdrop-blur-lg shadow-[0_0_15px_rgba(255,255,255,0.2)] mx-3">
       <h2 className="text-2xl text-center mb-10 text-white font-bold">
         Login to your account
       </h2>
@@ -162,10 +163,9 @@ const Login = ({ toggleForm }) => {
         </button>
       </form>
 
-      <div className="mt-4 flex justify-between text-sm mx-2">
-        <p className="text-zinc-300 underline hover:text-blue-500">
-          {" "}
-          Forgot Password
+      <div className="mt-5 sm:flex flex-row text-center sm:gap-x-24 sm:justify-center text-sm mx-2">
+        <p className="text-zinc-300 underline hover:text-blue-500 mb-2 sm:mb-0">
+          <Link to='/forgot-password'>Forgot Password</Link>
         </p>
         <p className="text-zinc-300">
           Don't have an account?
