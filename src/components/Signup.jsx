@@ -1,17 +1,10 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import {
-  QRCode,
-  Modal,
-  Space,
-  Input,
-  Typography,
-  Flex,
-  notification,
-} from "antd";
+import { notification } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const { Title } = Typography;
+import { auth, GoogleAuthProvider } from "../firebaseconfig";
+import { signInWithPopup } from "firebase/auth";
 
 const Signup = ({ toggleForm }) => {
   const {
@@ -19,78 +12,73 @@ const Signup = ({ toggleForm }) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [Code, setCode] = useState("");
-  const [OTP, setOtp] = useState(null);
+  const [Code, setCode] = useState(null);
+  const [Userobj, setUserObj] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const timeoutDuration = 60000; // 1 minute in milliseconds (60 seconds)
 
-  // Function that returns a Promise and waits for the OTP to be entered
-  const waitForOtp = () => {
-    return new Promise((resolve, reject) => {
-      // Start checking every 500ms if OTP is entered
-      const checkOtp = setInterval(() => {
-        // Convert OTP to a string and check if it has the required length
-        if (OTP.length === 6) {
-          clearInterval(checkOtp); // Stop checking once OTP is entered
-          clearTimeout(timeout); // Clear the timeout if OTP is entered in time
-          resolve(OTP); // Resolve the promise with the OTP value
-        }
-      }, 500);
+  const [OTP, setOTP] = useState(new Array(6).fill(""));
 
-      // Set a timeout for 1 minute, after which the promise is rejected
-      const timeout = setTimeout(() => {
-        clearInterval(checkOtp); // Stop checking if the time runs out
-        reject(new Error("OTP input timed out after 1 minute")); // Reject with an error
-      }, timeoutDuration);
-    });
+  // Handle OTP input change
+  const handleChange = (element, index) => {
+    if (isNaN(element.value)) return;
+
+    const newOTP = [...OTP];
+    newOTP[index] = element.value;
+    setOTP(newOTP);
+
+    // Move to the next input field if a number is entered
+    if (element.nextSibling && element.value) {
+      element.nextSibling.focus();
+    }
   };
 
-  const GenerateQr = (code) => {
-    setCode(code);
-    setIsModalOpen(true);
-  };
-
-  const connectUrl = async (str, obj) => {
+  const connectUrl = async (str, payload) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
-    let payload = {
-      email: obj.email,
-      password: obj.password,
-      name: obj.username,
-    };
     const { data } = await axios.post(
-      `http://localhost:5000/api/auth/${str}`,
+      `http://localhost:5000/api/${str}`,
       payload,
       config
     );
     return data;
   };
 
-  const QRcodeVerification = async (code) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    // const { data } = await axios.post(
-    //   `http://localhost:5000/api/auth/QRverification`,
-    //   code,
-    //   config
-    // );
-    return false;
+  const secondVerification = async (User) => {
+    try {
+      console.log(OTP);
+      console.log(Number(OTP.join("")));
+      const isQRverified = await connectUrl("auth/2fa/verify", {
+        userId: User.user.userId,
+        token: Number(OTP.join("")),
+      });
+      console.log(isQRverified);
+      if (isQRverified.verified) {
+        localStorage.setItem("userinfo", JSON.stringify(User));
+        notification.success({
+          message: "2nd Verification done!",
+          description: "Verified through QR succesfuly!",
+        });
+        setIsLoading(false);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      notification.error({
+        message: "Error Occcured!",
+      });
+      setIsLoading(false);
+      setCode(null);
+    }
   };
 
   const onSubmit = async (obj) => {
     setIsLoading(true);
     try {
       // fetching the user in authentication db
-      const UserinAdb = await connectUrl("signup", obj);
+      const UserinAdb = await connectUrl("auth/signup", obj);
       console.log(UserinAdb);
 
       // asking whether emial is verified
@@ -100,57 +88,51 @@ const Signup = ({ toggleForm }) => {
 
       if (userConfirmed) {
         // chking is email is verified
-        const isEmailVerified = await connectUrl("isEmailVerified", obj);
+        const isEmailVerified = await connectUrl("auth/isEmailVerified", obj);
         if (isEmailVerified) {
           notification.success({
             message: "1st Verification done!",
             description: "Verified through email succesfuly!",
           });
-          // to store user in db
-          //   const User = await connectUrl("storeUser", obj);
-
-          //2nd Verification
-          const FetchedCode = "";
-          GenerateQr(FetchedCode);
-          const enteredOtp = await waitForOtp();
-          const isQRverified = await QRcodeVerification(enteredOtp);
-          if (isQRverified) {
-            localStorage.setItem("userinfo", JSON.stringify(User));
-            notification.success({
-              message: "2nd Verification done!",
-              description: "Verified through QR succesfuly!",
-            });
-            setIsLoading(false);
-            navigate("/dashboard");
-          } else {
-            notification.error({
-              message: "QR Verification not done!",
-              description: "Please verify QR properly!",
-            });
-            setIsModalOpen(false);
-            setOtp(null);
-            setIsLoading(false);
-          }
-        } else {
-          notification.error({
-            message: "Verification not done!",
-            description: "Please verify email properly!",
+          const User = await connectUrl("user/add", obj);
+          console.log(User);
+          const response = await connectUrl("auth/2fa/generate", {
+            userId: User.user.userId,
           });
-          setIsLoading(false);
+          setCode(response.qrCode);
+          console.log(response);
+          setUserObj(User);
         }
-      } else {
-        // User clicked "Cancel"
-        notification.error({
-          message: "Verification not done!",
-          description: "Please verify link sended in your email",
-        });
-        setIsLoading(false);
       }
     } catch (error) {
       notification.error({
         message: "Error Occcured!",
       });
       setIsLoading(false);
+      setCode(null);
+    }
+  };
+
+  const signinWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      // Sign in with popup
+      const result = await signInWithPopup(auth, provider);
+      console.log(result);
+      // to fetch user in db
+      const User = await connectUrl("user/add", {
+        name: result.user.displayName,
+        email: result.user.email,
+      });
+      console.log(User);
+      const response = await connectUrl("auth/2fa/generate", {
+        userId: User.user.userId,
+      });
+
+      setCode(response.qrCode);
+      setUserObj(User);
+    } catch (error) {
+      console.error("Error signing in with Google:", error);
     }
   };
   
@@ -165,15 +147,15 @@ const Signup = ({ toggleForm }) => {
           <div className="relative mb-4">
             <input
               type="text"
-              {...register("username", { required: "Username is required" })}
+              {...register("name", { required: "name is required" })}
               className={`peer w-full p-3 border ${
-                errors.username ? "border-red-500" : "border-gray-400"
+                errors.name ? "border-red-500" : "border-gray-400"
               } rounded-lg shadow-sm focus:border-blue-800 placeholder-transparent bg-transparent text-white mb-4 font-bold`}
-              placeholder="Enter your username"
+              placeholder="Enter your name"
             />
             <label className="absolute left-3 -top-5 text-sm font-medium text-gray-300 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-300 peer-focus:-top-5 peer-focus:left-2 peer-focus:text-sm peer-focus:text-white -z-10">
-              Enter your Username{" "}
-              {errors.username && <span className="text-red-500">*</span>}
+              Enter your name{" "}
+              {errors.name && <span className="text-red-500">*</span>}
             </label>
           </div>
 
@@ -245,6 +227,7 @@ const Signup = ({ toggleForm }) => {
         </div>
         <button
           disabled={isLoading}
+          onClick={signinWithGoogle}
           className="w-full bg-sky-950 border border-gray-500 text-gray-100 p-2 rounded-lg hover:bg-blue-900 transform duration-300 shadow-2xl font-semibold"
         >
           <span className="flex justify-center items-center gap-2">
@@ -252,20 +235,52 @@ const Signup = ({ toggleForm }) => {
             Continue with Google
           </span>
         </button>
+        {Code && (
+          <div className="mt-4 max-w-full max-h-30 bg-white shadow-lg rounded-lg overflow-hidden flex">
+            <div className="w-1/3">
+              <img
+                src={Code}
+                alt="Card Image"
+                className="object-contain w-full h-full"
+              />
+            </div>
+
+            <div className="w-2/3 p-6">
+              <div className="mt-6">
+                <label
+                  htmlFor="otp"
+                  className="block text-gray-700 font-semibold mb-2"
+                >
+                  Enter OTP:
+                </label>
+                <div className="flex space-x-2">
+                  {OTP.map((digit, index) => (
+                    <input
+                      key={index}
+                      type="text"
+                      maxLength="1"
+                      className="w-9 h-9 text-center border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      value={digit}
+                      onChange={(e) => handleChange(e.target, index)}
+                      onFocus={(e) => e.target.select()}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <div className="mt-6 flex justify-between items-center">
+                <button
+                  onClick={() => secondVerification(Userobj)}
+                  id="otpSubmitButton"
+                  className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-600 transition"
+                >
+                  Enter
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-      <Modal
-        title="Scan With Google authenticator"
-        open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
-      >
-        <Space direction="horizontal" align="center">
-          <QRCode value={Code || "-"} />
-          <Flex align="flex-end" vertical>
-            <Title level={4}>Enter OTP</Title>
-            <Input.OTP value={OTP} onChange={() => setOtp(value)} />
-          </Flex>
-        </Space>
-      </Modal>
     </>
   );
 };
