@@ -111,5 +111,5 @@
 
 ## Predictive analysis: 
 - We are predicting the next year's data using the growth/decline value obtained from above computation on the last year's data.
-- We are currently researching for a better prediction method.
-<!-- More to be written by ChatGPT -->
+- We tried to predict the next year's data using deep learning. The method used was <b><u>Stochastic Gradient Descent</u></b> . But, the results we got were giving very absurd values for the data. So, we decided to use the above method only. But, we are still looking for a better prediction technique.
+- [Get the google colab notebook here](https://colab.research.google.com/drive/1khp_eWRDe5ziXGCwyw_obJtAheK3Qz26?usp=sharing)
