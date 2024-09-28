@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import DynamicChart from "./DynamicChart";
 
-const CompanyDashboard = () => {
+const CompanyDashboard = ({ companyId }) => {
+  const [companyDetails, setCompanyDetails] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const [chartData1, setChartData1] = useState({
     chart: {
       type: "area",
@@ -17,252 +21,27 @@ const CompanyDashboard = () => {
       },
     },
     xAxis: {
-      title: {
-        text: "Year",
-      },
+      title: { text: "Year" },
     },
     yAxis: {
-      title: {
-        text: "Number of Employees",
-      },
+      title: { text: "Stock Price" },
       gridLineWidth: 0,
       lineWidth: 1,
       color: "white",
     },
-    legend: { enabled: false },
     series: [
       {
-        name: "Installation & Developers",
-        data: [
-          43934, 48656, 65165, 81827, 112143, 142383, 171533, 165174, 155157,
-          161454, 154610, 168960, 171558,
-        ],
+        name: "Stock Price",
+        data: [],
         color: "rgb(24,254,254)",
         fillColor: {
-          linearGradient: {
-            x1: 0,
-            y1: 0,
-            x2: 0,
-            y2: 1,
-          },
+          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
           stops: [
             [0, "rgba(0, 5, 107, 1)"],
             [1, "rgba(0, 0, 0, 0.5)"],
           ],
         },
-        marker: {
-          radius: 2,
-        },
-      },
-    ],
-    responsive: {
-      rules: [
-        {
-          condition: {
-            maxWidth: 500,
-          },
-          chartOptions: {
-            legend: {
-              layout: "horizontal",
-              align: "center",
-              verticalAlign: "bottom",
-            },
-          },
-        },
-      ],
-    },
-  });
-  const [chartData2, setChartData2] = useState({
-    chart: {
-      type: "area",
-      backgroundColor: "transparent",
-      plotBackgroundColor: "transparent",
-      plotBorderColor: "transparent",
-    },
-    title: {
-      text: "Market-Cap",
-      align: "center",
-      style: {
-        color: "rgba(216,210,250,1)",
-      },
-    },
-    xAxis: {
-      title: {
-        text: "Year",
-      },
-    },
-    yAxis: {
-      title: {
-        text: "Number of Employees",
-      },
-      gridLineWidth: 0,
-      lineWidth: 1,
-      color: "white",
-    },
-    legend: { enabled: false },
-    series: [
-      {
-        name: "Installation & Developers",
-        data: [
-          43934, 48656, 65165, 81827, 112143, 142383, 171533, 165174, 155157,
-          161454, 154610, 168960, 171558,
-        ],
-        color: "rgb(24,254,254)",
-        fillColor: {
-          linearGradient: {
-            x1: 0,
-            y1: 0,
-            x2: 0,
-            y2: 1,
-          },
-          stops: [
-            [0, "rgba(0, 5, 107, 1)"],
-            [1, "rgba(0, 0, 0, 0.5)"],
-          ],
-        },
-        marker: {
-          radius: 2,
-        },
-      },
-    ],
-    responsive: {
-      rules: [
-        {
-          condition: {
-            maxWidth: 500,
-          },
-          chartOptions: {
-            legend: {
-              layout: "horizontal",
-              align: "center",
-              verticalAlign: "bottom",
-            },
-          },
-        },
-      ],
-    },
-  });
-  const [chartData3, setChartData3] = useState({
-    chart: {
-      type: "area",
-      backgroundColor: "transparent",
-      plotBackgroundColor: "transparent",
-      plotBorderColor: "transparent",
-    },
-    title: {
-      text: "Market-Cap",
-      align: "center",
-      style: {
-        color: "rgba(216,210,250,1)",
-      },
-    },
-    xAxis: {
-      title: {
-        text: "Year",
-      },
-    },
-    yAxis: {
-      title: {
-        text: "Number of Employees",
-      },
-      gridLineWidth: 0,
-      lineWidth: 1,
-      color: "white",
-    },
-    legend: { enabled: false },
-    series: [
-      {
-        name: "Installation & Developers",
-        data: [
-          43934, 48656, 65165, 81827, 112143, 142383, 171533, 165174, 155157,
-          161454, 154610, 168960, 171558,
-        ],
-        color: "rgb(24,254,254)",
-        fillColor: {
-          linearGradient: {
-            x1: 0,
-            y1: 0,
-            x2: 0,
-            y2: 1,
-          },
-          stops: [
-            [0, "rgba(0, 5, 107, 1)"],
-            [1, "rgba(0, 0, 0, 0.5)"],
-          ],
-        },
-        marker: {
-          radius: 2,
-        },
-      },
-    ],
-    responsive: {
-      rules: [
-        {
-          condition: {
-            maxWidth: 500,
-          },
-          chartOptions: {
-            legend: {
-              layout: "horizontal",
-              align: "center",
-              verticalAlign: "bottom",
-            },
-          },
-        },
-      ],
-    },
-  });
-  const [chartData4, setChartData4] = useState({
-    chart: {
-      type: "area",
-      backgroundColor: "transparent",
-      plotBackgroundColor: "transparent",
-      plotBorderColor: "transparent",
-    },
-    title: {
-      text: "Market-Cap",
-      align: "center",
-      style: {
-        color: "rgba(216,210,250,1)",
-      },
-    },
-    xAxis: {
-      title: {
-        text: "Year",
-      },
-    },
-    yAxis: {
-      title: {
-        text: "Number of Employees",
-      },
-      gridLineWidth: 0,
-      lineWidth: 1,
-      color: "white",
-    },
-    legend: { enabled: false },
-    series: [
-      {
-        name: "Installation & Developers",
-        data: [
-          43934, 48656, 65165, 81827, 112143, 142383, 171533, 165174, 155157,
-          161454, 154610, 168960, 171558,
-        ],
-        color: "rgb(24,254,254)",
-        fillColor: {
-          linearGradient: {
-            x1: 0,
-            y1: 0,
-            x2: 0,
-            y2: 1,
-          },
-          stops: [
-            [0, "rgba(0, 5, 107, 1)"],
-            [1, "rgba(0, 0, 0, 0.5)"],
-          ],
-        },
-        marker: {
-          radius: 2,
-        },
+        marker: { radius: 2 },
       },
     ],
     responsive: {
@@ -283,12 +62,255 @@ const CompanyDashboard = () => {
     },
   });
 
-  //to swap charts
+  const [chartData2, setChartData2] = useState({
+    chart: {
+      type: "area",
+      backgroundColor: "transparent",
+      plotBackgroundColor: "transparent",
+      plotBorderColor: "transparent",
+    },
+    title: {
+      text: "Revenue",
+      align: "center",
+      style: {
+        color: "rgba(216,210,250,1)",
+      },
+    },
+    xAxis: {
+      title: { text: "Year" },
+    },
+    yAxis: {
+      title: { text: "Revenue" },
+      gridLineWidth: 0,
+      lineWidth: 1,
+      color: "white",
+    },
+    series: [
+      {
+        name: "Revenue",
+        data: [],
+        color: "rgb(24,254,254)",
+        fillColor: {
+          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+          stops: [
+            [0, "rgba(0, 5, 107, 1)"],
+            [1, "rgba(0, 0, 0, 0.5)"],
+          ],
+        },
+        marker: { radius: 2 },
+      },
+    ],
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 500,
+          },
+          chartOptions: {
+            legend: {
+              layout: "horizontal",
+              align: "center",
+              verticalAlign: "bottom",
+            },
+          },
+        },
+      ],
+    },
+  });
+
+  const [chartData3, setChartData3] = useState({
+    chart: {
+      type: "area",
+      backgroundColor: "transparent",
+      plotBackgroundColor: "transparent",
+      plotBorderColor: "transparent",
+    },
+    title: {
+      text: "Expenses",
+      align: "center",
+      style: {
+        color: "rgba(216,210,250,1)",
+      },
+    },
+    xAxis: {
+      title: { text: "Year" },
+    },
+    yAxis: {
+      title: { text: "Expenses" },
+      gridLineWidth: 0,
+      lineWidth: 1,
+      color: "white",
+    },
+    series: [
+      {
+        name: "Expenses",
+        data: [],
+        color: "rgb(24,254,254)",
+        fillColor: {
+          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+          stops: [
+            [0, "rgba(0, 5, 107, 1)"],
+            [1, "rgba(0, 0, 0, 0.5)"],
+          ],
+        },
+        marker: { radius: 2 },
+      },
+    ],
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 500,
+          },
+          chartOptions: {
+            legend: {
+              layout: "horizontal",
+              align: "center",
+              verticalAlign: "bottom",
+            },
+          },
+        },
+      ],
+    },
+  });
+
+  const [chartData4, setChartData4] = useState({
+    chart: {
+      type: "area",
+      backgroundColor: "transparent",
+      plotBackgroundColor: "transparent",
+      plotBorderColor: "transparent",
+    },
+    title: {
+      text: "Market Share",
+      align: "center",
+      style: {
+        color: "rgba(216,210,250,1)",
+      },
+    },
+    xAxis: {
+      title: { text: "Year" },
+    },
+    yAxis: {
+      title: { text: "Market Share" },
+      gridLineWidth: 0,
+      lineWidth: 1,
+      color: "white",
+    },
+    series: [
+      {
+        name: "Market Share",
+        data: [],
+        color: "rgb(24,254,254)",
+        fillColor: {
+          linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+          stops: [
+            [0, "rgba(0, 5, 107, 1)"],
+            [1, "rgba(0, 0, 0, 0.5)"],
+          ],
+        },
+        marker: { radius: 2 },
+      },
+    ],
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 500,
+          },
+          chartOptions: {
+            legend: {
+              layout: "horizontal",
+              align: "center",
+              verticalAlign: "bottom",
+            },
+          },
+        },
+      ],
+    },
+  });
+
   const swapData = (data1, setData1, data2, setData2) => {
     const temp = data1;
     setData1(data2);
     setData2(temp);
   };
+
+  useEffect(() => {
+    const fetchCompanyDetails = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5000/api/company/getcomapnydetails/${companyId}`
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+
+        const data = await response.json();
+        setCompanyDetails(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCompanyDetails();
+  }, [companyId]);
+
+  useEffect(() => {
+    if (companyDetails) {
+      setChartData1((prevData) => ({
+        ...prevData,
+        series: [
+          {
+            ...prevData.series[0],
+            data: companyDetails.Stock_Price || [], 
+          },
+        ],
+      }));
+
+      setChartData2((prevData) => ({
+        ...prevData,
+        series: [
+          {
+            ...prevData.series[0],
+            data: companyDetails.Revenue || [],
+          },
+        ],
+      }));
+
+      setChartData3((prevData) => ({
+        ...prevData,
+        series: [
+          {
+            ...prevData.series[0],
+            data: companyDetails.Expenses || [],
+          },
+        ],
+      }));
+
+      setChartData4((prevData) => ({
+        ...prevData,
+        series: [
+          {
+            ...prevData.series[0],
+            data: companyDetails.Market_Share || [],
+          },
+        ],
+      }));
+    }
+  }, [companyDetails]);
+
+  if (loading) {
+    return <div className="text-xl text-blue-600 font-poppins text-center">Loading company details...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
 
   return (
     <div className="h-screen bg-gradient-to-tr from-[#000000] to-[#000000ee]">
@@ -300,11 +322,11 @@ const CompanyDashboard = () => {
           <div className="relative h-1/2">
             <div className="name top-2 shadow-[#444444] shadow-inner h-full rounded-md flex flex-col justify-center items-left backdrop-blur-sm bg-transparent gap-y-4">
               <div className="company-name text-[#18fefe] pl-4 text-3xl font-lexend">
-                AMAZON
+                {companyDetails.Name}
               </div>
               <div className="country-name pl-4">
-                <span className="text-2xl text-[#18FEFE]">United States</span>
-                <span className="text-sm px-2 text-[#9bccfa]">(U.S.A)</span>
+                <span className="text-2xl text-[#18FEFE]">{companyDetails.Country}</span>
+                <span className="text-sm px-2 text-[#9bccfa]">({companyDetails.Country_Code})</span>
               </div>
             </div>
             <div className="absolute rounded-md top-0 left-0 w-full h-full bg-gradient-to-tr from-transparent to-[#3405b491] via-transparent hover:opacity-100"></div>
@@ -313,7 +335,7 @@ const CompanyDashboard = () => {
             <div className="fixed-data top-2 shadow-[#444444] shadow-inner h-full rounded-md flex  justify-center items-center backdrop-blur-sm bg-transparent gap-x-3 px-2">
               <div className="market shadow-inner shadow-[#281f47] h-3/5 w-full rounded-lg bg-[#000000]">
                 <div className="value text-[#18FEFE] font-proguerr text-xl  h-4/5 flex items-center justify-center rounded-b-lg">
-                  $123.4B
+                  ${companyDetails.Market_Cap}
                 </div>
                 <div className="quantity text-[#18FEFE] h-1/5  flex justify-center rounded-b-lg text-sm ">
                   Market Capital
@@ -321,7 +343,7 @@ const CompanyDashboard = () => {
               </div>
               <div className="diversity  shadow-inner shadow-[#281f47] h-3/5 w-full rounded-lg bg-[#000000]">
                 <div className="value text-[#18FEFE] font-proguerr text-3xl  h-4/5 flex items-center justify-center rounded-b-lg">
-                  53 %
+                  {companyDetails.Diversity}%
                 </div>
                 <div className="quantity text-[#18FEFE] h-1/5  flex justify-center rounded-b-lg text-sm ">
                   Diversity
@@ -333,7 +355,7 @@ const CompanyDashboard = () => {
                 </div>
                 <div className="quantity  text-[#18FEFE] h-1/5  flex justify-center rounded-b-lg text-sm ">
                   <span>
-                    Firms <sub className=" text-[10px]">(USA)</sub>
+                    Firms <sub className=" text-[10px]">({companyDetails.Country_Code})</sub>
                   </span>
                 </div>
               </div>
