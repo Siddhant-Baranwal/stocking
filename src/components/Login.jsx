@@ -1,96 +1,93 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { Modal, Space, Input, Typography, Flex, notification } from "antd";
-const { Title } = Typography;
-import { Link } from 'react-router-dom'
+import { notification } from "antd";
+import { auth, GoogleAuthProvider } from "../firebaseconfig";
+import { signInWithPopup } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ toggleForm }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    b,
   } = useForm();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [OTP, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const timeoutDuration = 60000; // 1 minute in milliseconds (60 seconds)
+  const [Userobj, setUserObj] = useState(null);
+  const navigate = useNavigate();
+  const [isemailVerified, setisEmailVerified] = useState(false);
 
-  // Function that returns a Promise and waits for the OTP to be entered
-  const waitForOtp = () => {
-    return new Promise((resolve, reject) => {
-      // Start checking every 500ms if OTP is entered
-      const checkOtp = setInterval(() => {
-        // Convert OTP to a string and check if it has the required length
-        if (OTP.length === 6) {
-          clearInterval(checkOtp); // Stop checking once OTP is entered
-          clearTimeout(timeout); // Clear the timeout if OTP is entered in time
-          resolve(OTP); // Resolve the promise with the OTP value
-        }
-      }, 500);
+  const [OTP, setOTP] = useState(new Array(6).fill(""));
 
-      // Set a timeout for 1 minute, after which the promise is rejected
-      const timeout = setTimeout(() => {
-        clearInterval(checkOtp); // Stop checking if the time runs out
-        reject(new Error("OTP input timed out after 1 minute")); // Reject with an error
-      }, timeoutDuration);
-    });
+  // Handle OTP input change
+  const handleChange = (element, index) => {
+    if (isNaN(element.value)) return;
+
+    const newOTP = [...OTP];
+    newOTP[index] = element.value;
+    setOTP(newOTP);
+
+    // Move to the next input field if a number is entered
+    if (element.nextSibling && element.value) {
+      element.nextSibling.focus();
+    }
   };
 
-  const connectUrl = async (str, obj) => {
+  const connectUrl = async (str, payload) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
-    let payload = {
-      email: obj.email,
-      password: obj.password,
-      name: obj.username,
-    };
     const { data } = await axios.post(
-      `http://localhost:5000/api/auth/${str}`,
+      `http://localhost:5000/api/${str}`,
       payload,
       config
     );
     return data;
   };
 
+  const secondVerification = async (User) => {
+    try {
+      console.log(OTP);
+      console.log(Number(OTP.join("")));
+      const isQRverified = await connectUrl("auth/2fa/verify", {
+        userId: User.user.userId,
+        token: Number(OTP.join("")),
+      });
+      console.log(isQRverified);
+      if (isQRverified.verified) {
+        localStorage.setItem("userinfo", JSON.stringify(User));
+        notification.success({
+          message: "2nd Verification done!",
+          description: "Verified through QR succesfuly!",
+        });
+        setIsLoading(false);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      notification.error({
+        message: "Error Occcured!",
+      });
+      console.log(error);
+      setIsLoading(false);
+    }
+  };
+
   const onSubmit = async (obj) => {
     setIsLoading(true);
     try {
       // fetching the user in authentication db
-      const UserinAdb = await connectUrl("signin", obj);
+      const UserinAdb = await connectUrl("auth/signin", obj);
       console.log(UserinAdb);
 
       if (UserinAdb.emailVerified) {
-        //fetching the user from DB
-        setIsModalOpen(true);
-        // const User = await connectUrl("FetchUser", obj);
-        const User = {};
-        // Process to chk Is user.code===OTP
-        const enteredOtp = await waitForOtp();
-        // converting cypher in userdb to otp
-        //doing process
-        if (enteredOtp === User.cypher) {
-          localStorage.setItem("userinfo", JSON.stringify(User));
-          notification.success({
-            message: "2nd Verification done!",
-            description: "Verified through QR succesfuly!",
-          });
-          setIsLoading(false);
-
-          navigate("/dashboard");
-        } else {
-          notification.error({
-            message: "Verification fialed!",
-          });
-          console.log("hi");
-          setIsModalOpen(false);
-          setOtp(null);
-          setIsLoading(false);
-        }
+        const User = await connectUrl("user/add", obj);
+        console.log(User);
+        setisEmailVerified(true);
+        setUserObj(User);
       } else {
         notification.error({
           message: "Invalid Credentials!",
@@ -105,7 +102,26 @@ const Login = ({ toggleForm }) => {
       setIsLoading(false);
     }
   };
-  
+
+  const signinWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      // Sign in with popup
+      const result = await signInWithPopup(auth, provider);
+      console.log(result);
+      setisEmailVerified(true);
+      // to store user in db
+      const User = await connectUrl("user/add", {
+        name: result.user.displayName,
+        email: result.user.email,
+      });
+      console.log(User);
+      setUserObj(User);
+    } catch (error) {
+      console.error("Error signing in with Google:", error);
+    }
+  };
+
   return (
     <div className="rounded-lg border-white border-opacity-10 border-2 p-6 max-w-lg w-full backdrop-blur-lg shadow-[0_0_15px_rgba(255,255,255,0.2)] mx-3">
       <h2 className="text-2xl text-center mb-10 text-white font-bold">
@@ -163,9 +179,10 @@ const Login = ({ toggleForm }) => {
         </button>
       </form>
 
-      <div className="mt-5 sm:flex flex-row text-center sm:gap-x-24 sm:justify-center text-sm mx-2">
-        <p className="text-zinc-300 underline hover:text-blue-500 mb-2 sm:mb-0">
-          <Link to='/forgot-password'>Forgot Password</Link>
+      <div className="mt-4 flex justify-between text-sm mx-2">
+        <p className="text-zinc-300 underline hover:text-blue-500">
+          {" "}
+          Forgot Password
         </p>
         <p className="text-zinc-300">
           Don't have an account?
@@ -184,22 +201,53 @@ const Login = ({ toggleForm }) => {
         <hr className="flex-grow border-t border-gray-300" />
       </div>
 
-      <button className="w-full bg-sky-950 border border-gray-500 text-gray-100 p-2 rounded-lg hover:bg-blue-900 transform duration-300 shadow-2xl font-semibold">
+      <button
+        disabled={isLoading}
+        onClick={signinWithGoogle}
+        className="w-full bg-sky-950 border border-gray-500 text-gray-100 p-2 rounded-lg hover:bg-blue-900 transform duration-300 shadow-2xl font-semibold"
+      >
         <span className="flex justify-center items-center gap-2">
           <img src="/google.svg" alt="Google Icon" />
           Continue with Google
         </span>
       </button>
-      <Modal
-        title="Use Google authenticator"
-        open={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
-      >
-        <Space direction="horizontal" align="center">
-          <Title level={4}>Enter OTP</Title>
-          <Input.OTP value={OTP} onChange={() => setOtp(value)} />
-        </Space>
-      </Modal>
+      {isemailVerified && (
+        <div className="mt-4 max-w-full max-h-30 bg-white shadow-lg rounded-lg overflow-hidden flex">
+          <div className="w-2/3 p-6">
+            <div className="mt-6">
+              <label
+                htmlFor="otp"
+                className="block text-gray-700 font-semibold mb-2"
+              >
+                Enter OTP:
+              </label>
+              <div className="flex space-x-2">
+                {OTP.map((digit, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    maxLength="1"
+                    className="w-9 h-9 text-center border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={digit}
+                    onChange={(e) => handleChange(e.target, index)}
+                    onFocus={(e) => e.target.select()}
+                  />
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-6 flex justify-between items-center">
+              <button
+                onClick={() => secondVerification(Userobj)}
+                id="otpSubmitButton"
+                className="bg-blue-500 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-600 transition"
+              >
+                Enter
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
