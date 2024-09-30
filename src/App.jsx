@@ -1,13 +1,12 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Dashboard from "./components/Dashboard";
-import Landing from "./components/Landing";
-import ForgotPassword from "./components/ForgotPassword";
-import Profile from "./components/Profile";
-import ChangePassword from "./components/ChangePassword";
-import PageWiseHistory from "./components/PageWiseHistory";
-import Resetpassword from "./components/Resetpassword";
-import CompanyData from "./components/CompanyData";
+import Dashboard from "./components/dashboard/Dashboard";
+import Landing from "./components/landing/Landing";
+import ForgotPassword from "./components/landing/ForgotPassword";
+import ChangePassword from "./components/dashboard/ChangePassword";
+import PageWiseHistory from "./components/dashboard/PageWiseHistory"
+import Resetpassword from "./components/landing/Resetpassword";
+import CompanyData from "./components/company/CompanyData";
 
 function App() {
   return (
@@ -17,7 +16,6 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<Resetpassword />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/history/:company" element={<PageWiseHistory />} />
         <Route path="/companyData" element={<CompanyData />} />

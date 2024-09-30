@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { notification } from "antd";
-import { auth, GoogleAuthProvider } from "../firebaseconfig";
+import { auth, GoogleAuthProvider } from "../../firebaseconfig";
 import { signInWithPopup } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 

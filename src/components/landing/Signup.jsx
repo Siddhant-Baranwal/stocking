@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { notification } from "antd";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { auth, GoogleAuthProvider } from "../firebaseconfig";
+import { auth, GoogleAuthProvider } from "../../firebaseconfig";
 import { signInWithPopup } from "firebase/auth";
 
 const Signup = ({ toggleForm }) => {
