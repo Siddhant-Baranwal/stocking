@@ -91,7 +91,7 @@ const CompanyData = () => {
             maxHeight: "100vh", // Ensure content takes full viewport height
           }}
         >
-          {selectedComponent === "CompanyDashboard" && <CompanyDashboard companyId="9l6rUuw1cvARviL4VbU3" />}
+          {selectedComponent === "CompanyDashboard" && <CompanyDashboard/>}
           {selectedComponent === "ComparisonMetrics" && <ComparisonMetrics />}
           {selectedComponent === "FuturePredictions" && <FuturePredictions />}
         </Content>

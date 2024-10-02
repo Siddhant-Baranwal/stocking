@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import DynamicChart from "./DynamicChart";
+import { useParams } from "react-router-dom";
 
-const CompanyDashboard = ({ companyId }) => {
+const CompanyDashboard = (
+  
+) => {
+  const { companyId } = useParams();
+  console.log(companyId);
   const [companyDetails, setCompanyDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);

@@ -17,8 +17,7 @@ function App() {
         <Route path="/reset-password" element={<Resetpassword />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/change-password" element={<ChangePassword />} />
-        <Route path="/history/:company" element={<PageWiseHistory />} />
-        <Route path="/companyData" element={<CompanyData />} />
+        <Route path="/history/:companyId" element={<CompanyData />} />
       </Routes>
     </>
   );

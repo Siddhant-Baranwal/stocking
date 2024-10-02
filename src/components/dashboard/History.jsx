@@ -46,9 +46,6 @@ const History = () => {
       {showSide && (
         <div>
           <div className="sidetab">
-            <Link to="/profile">My profile</Link>
-          </div>
-          <div className="sidetab">
             <Link to="/change-password">Change password</Link>
           </div>
           <div className="sidetab">Toggle theme</div>
