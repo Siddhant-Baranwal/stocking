@@ -1,14 +1,10 @@
-import React, { useState } from "react";
-import {
-  DesktopOutlined,
-  FileOutlined,
-  PieChartOutlined,
-} from "@ant-design/icons";
-import { Layout, Menu, theme } from "antd";
+import React, { useState, useEffect } from "react";
+import { DesktopOutlined, FileOutlined, PieChartOutlined } from "@ant-design/icons";
+import { Layout, Menu } from "antd";
 import CompanyDashboard from "./CompanyDashboard";
 import ComparisonMetrics from "./ComparisonMetrics";
 import FuturePredictions from "./FuturePredictions";
-
+import ThemeSwitch from "../theme/ThemeSwitch";
 const { Content, Sider } = Layout;
 
 function getItem(label, key, icon) {
@@ -21,20 +17,19 @@ function getItem(label, key, icon) {
 
 const items = [
   getItem("Company Overview", "1", <PieChartOutlined />),
-  getItem("Comparision Metrics", "2", <DesktopOutlined />),
+  getItem("Comparison Metrics", "2", <DesktopOutlined />),
   getItem("Future Predictions", "3", <FileOutlined />),
 ];
 
 const CompanyData = () => {
   const [collapsed, setCollapsed] = useState(false);
-  const [selectedComponent, setSelectedComponent] =
-    useState("CompanyDashboard");
+  const [selectedComponent, setSelectedComponent] = useState("CompanyDashboard");
 
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme ? JSON.parse(savedTheme) : true;
+  });
 
-  // Handle menu item clicks to update the selected component
   const handleMenuItemClick = (item) => {
     switch (item.key) {
       case "1":
@@ -51,6 +46,28 @@ const CompanyData = () => {
     }
   };
 
+  // Update theme in localStorage and state
+  const toggleTheme = () => {
+    setIsDarkMode((prevMode) => {
+      const newMode = !prevMode;
+      localStorage.setItem('theme', JSON.stringify(newMode));
+      return newMode;
+    });
+  };
+
+  // Dynamic styles based on theme
+  const contentStyle = {
+    margin: "4px",
+    padding: "16px",
+    background: isDarkMode ? "#1c1c1c" : "#dddddd", 
+    borderRadius: "8px",
+    boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
+    border: isDarkMode ? "1px solid #333" : "1px solid #ddd", 
+    color: isDarkMode ? "#ffffff" : "#000000",
+    overflowY: "auto",
+    maxHeight: "100vh",
+  };
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
@@ -58,40 +75,33 @@ const CompanyData = () => {
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
         style={{
-          overflow: "hidden", // Ensure no scrolling in sidebar
-          position: "fixed", // Fix the sidebar position
-          height: "100vh", // Set full viewport height
-          left: 0, // Stick to the left side of the screen
+          overflow: "hidden",
+          position: "fixed",
+          height: "100vh",
+          left: 0,
           top: 0,
-          zIndex: 10, // Ensure it's above other elements
+          zIndex: 10,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          backgroundColor: isDarkMode ? "#001529" : "#f5f5f5",
         }}
       >
         <div className="demo-logo-vertical" />
         <Menu
-          theme="dark"
+          theme={isDarkMode ? "dark" : "light"} 
           defaultSelectedKeys={["1"]}
           mode="inline"
           items={items}
-          onClick={handleMenuItemClick} // Correct onClick usage
+          onClick={handleMenuItemClick}
         />
+        <div className="flex items-center" style={{ padding: "10px" }}>
+          <ThemeSwitch isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
+        </div>
       </Sider>
       <Layout style={{ marginLeft: collapsed ? "80px" : "200px" }}>
-        {" "}
-        {/* Adjust content margin based on sidebar */}
-        <Content
-          style={{
-            margin: "4px", // Slim margin
-            padding: "16px", // Inner padding for the content
-            background: "#1c1c1c", // Darker content background
-            borderRadius: "8px", // Rounded edges
-            boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)", // Subtle shadow
-            border: "1px solid #333", // Border to define edges
-            color: "#ffffff", // Text color for dark mode
-            overflowY: "auto", // Allow vertical scrolling in content
-            maxHeight: "100vh", // Ensure content takes full viewport height
-          }}
-        >
-          {selectedComponent === "CompanyDashboard" && <CompanyDashboard/>}
+        <Content style={contentStyle}>
+          {selectedComponent === "CompanyDashboard" && <CompanyDashboard isDarkMode={isDarkMode} toggleTheme={toggleTheme} />}
           {selectedComponent === "ComparisonMetrics" && <ComparisonMetrics />}
           {selectedComponent === "FuturePredictions" && <FuturePredictions />}
         </Content>
