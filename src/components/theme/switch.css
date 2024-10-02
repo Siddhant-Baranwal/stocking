@@ -1,5 +1,5 @@
 .switch {
-  font-size: 15px;
+  font-size: 10px;
   position: relative;
   display: inline-block;
   width: 64px;
@@ -19,19 +19,16 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #00233d;
+  background-color: white;
   transition: 0.4s;
-  border-radius: 30px;
 }
 
 .slider:before {
   position: absolute;
   content: '';
-  height: 30px;
-  width: 30px;
-  border-radius: 20px;
-  left: 2px;
-  bottom: 2px;
+  height: 34px;
+  width: 32px;
+  left: 0px;
   z-index: 2;
   background-color: #8a8a8a;
   transition: 0.4s;
@@ -47,7 +44,7 @@
 }
 
 .moon svg {
-  fill: #ffffff;
+  fill: white;
   position: absolute;
   top: 5px;
   left: 5px;
@@ -89,11 +86,11 @@
 }
 
 .input:checked + .slider {
-  background-color: #00233d;
+  background-color: rgb(0, 0, 0);
 }
 
 .input:focus + .slider {
-  box-shadow: 0 0 1px #00233d;
+  box-shadow: 0 0 1px black;
 }
 
 .input:checked + .slider:before {

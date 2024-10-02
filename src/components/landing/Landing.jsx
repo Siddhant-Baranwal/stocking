@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Login from "./Login";
 import Signup from "./Signup";
-import ThemeSwitch from "../theme/ThemeSwitch";
+
 const Landing = () => {
   const [isLogin, setIsLogin] = useState(true);
 
@@ -17,9 +17,6 @@ const Landing = () => {
       ) : (
         <Signup toggleForm={toggleForm} />
       )}
-      <div className="absolute bottom-8 right-8">
-        <ThemeSwitch />
-      </div>
     </div>
   );
 };
