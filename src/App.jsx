@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import Dashboard from "./components/dashboard/Dashboard";
 import Landing from "./components/landing/Landing";

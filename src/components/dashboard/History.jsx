@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const History = () => {
   const [showLinks, setShowLinks] = useState(false);
+  const navigate =useNavigate();
   const handleShowLinks = () => {
     setShowLinks(!showLinks);
   };
@@ -11,12 +12,8 @@ const History = () => {
     setShowSide(!showSide);
   };
   const deleteCookie = () => {
-    if (document.cookie.split(';').some((item) => item.trim().startsWith('token='))) {
-        document.cookie = 'token=; Max-Age=0; path=/;';
-        console.log("Cookie deleted");
-    } else {
-        console.log("Cookie does not exist");
-    }
+    localStorage.removeItem("userinfo");
+    navigate("/");
   };
   const companyList = [
     "Nestle",
