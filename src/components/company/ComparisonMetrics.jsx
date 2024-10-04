@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DynamicChart from "./DynamicChart";
 
-const ComparisonMetrics = () => {
+const ComparisonMetrics = ({ isDarkMode, toggleTheme }) => {
   const [chartData1, setChartData1] = useState({
     chart: {
       type: "area",
@@ -297,12 +297,106 @@ const ComparisonMetrics = () => {
     setB2(tempB);
   };
 
+  useEffect(() => {
+    setChartData1((prevData) => ({
+      ...prevData,
+      title: {
+        ...prevData.title,
+        style: {
+          color: isDarkMode ? "rgba(216,210,250,1)" : "rgba(100,145,195,1)",
+        },
+      },
+      series: [
+        {
+          ...prevData.series[0],
+          color: isDarkMode ? "rgba(24,254,254,1)" : "#1674ae",
+          fillColor: {
+            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+            stops: [
+              [0, isDarkMode ? "rgba(0, 5, 107, 1)" : "#4ea8de"], 
+              [1, isDarkMode ? "rgba(0, 0, 0, 0.5)" : "rgba(255, 255, 255, 0.5)"],
+            ],
+          },
+        },
+      ],
+    }));
+
+    setChartData2((prevData) => ({
+      ...prevData,
+      title: {
+        ...prevData.title,
+        style: {
+          color: isDarkMode ? "rgba(216,210,250,1)" : "rgba(100,145,195,1)",
+        },
+      },
+      series: [
+        {
+          ...prevData.series[0],
+          color: isDarkMode ? "rgba(24,254,254,1)" : "#1674ae",
+          fillColor: {
+            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+            stops: [
+              [0, isDarkMode ? "rgba(0, 5, 107, 1)" : "#4ea8de"], 
+              [1, isDarkMode ? "rgba(0, 0, 0, 0.5)" : "rgba(255, 255, 255, 0.5)"],
+            ],
+          },
+        },
+      ],
+    }));
+
+    setChartData3((prevData) => ({
+      ...prevData,
+      title: {
+        ...prevData.title,
+        style: {
+          color: isDarkMode ? "rgba(216,210,250,1)" : "rgba(100,145,195,1)",
+        },
+      },
+      series: [
+        {
+          ...prevData.series[0],
+          color: isDarkMode ? "rgba(24,254,254,1)" : "#1674ae",
+          fillColor: {
+            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+            stops: [
+              [0, isDarkMode ? "rgba(0, 5, 107, 1)" : "#4ea8de"], 
+              [1, isDarkMode ? "rgba(0, 0, 0, 0.5)" : "rgba(255, 255, 255, 0.5)"],
+            ],
+          },
+        },
+      ],
+    }));
+
+    setChartData4((prevData) => ({
+      ...prevData,
+      title: {
+        ...prevData.title,
+        style: {
+          color: isDarkMode ? "rgba(216,210,250,1)" : "rgba(100,145,195,1)",
+        },
+      },
+      series: [
+        {
+          ...prevData.series[0],
+          color: isDarkMode ? "rgba(24,254,254,1)" : "#1674ae",
+          fillColor: {
+            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+            stops: [
+              [0, isDarkMode ? "rgba(0, 5, 107, 1)" : "#4ea8de"], 
+              [1, isDarkMode ? "rgba(0, 0, 0, 0.5)" : "rgba(255, 255, 255, 0.5)"],
+            ],
+          },
+        },
+      ],
+    }));
+  }, [isDarkMode]);
+
   return (
-    <div className="h-screen bg-gradient-to-r from-[#000000] to-[#000000ee] flex flex-col justify-center px-10">
-      <div className="heading w-full py-3  text-slate-400 hover:text-[rgb(216,210,250)]  font-lexend font-extralight flex justify-center items-center text-5xl mb-6">
+    <div className={`h-screen ${isDarkMode ? "bg-gradient-to-tr from-[#000000] to-[#000000ee]" : "bg-white"} flex flex-col justify-center px-10`}>
+      <div className={`heading w-full py-3 ${isDarkMode ? "text-slate-400 hover:text-[rgb(216,210,250)]" : "text-zinc-500 hover:text-gray-900"} font-lexend font-extralight flex justify-center items-center text-5xl mb-6`}>
         Comparision Metrics
       </div>
-      <div className="tabs flex w-fit px-3 py-3 gap-10 mt-2 mb-5 rounded-md bg-[#111111]">
+      <div className={`tabs flex w-fit px-3 py-3 gap-10 mt-2 mb-5 rounded-md ${isDarkMode ? "bg-[#111111]" : "bg-[#f4f4f4]"}`}>
         <button
           onClick={() => {
             swapData(
@@ -316,7 +410,7 @@ const ComparisonMetrics = () => {
               setButton4
             );
           }}
-          className="tab bg-gradient-to-br from-[#ffffffce] to-[#030169] rounded-md p-1 text-white font-legend h-full min-w-28 shadow-inner flex justify-center items-center"
+          className={`tab ${isDarkMode ? "bg-gradient-to-br from-[#ffffffce] to-[#030169] text-white" : "bg-gradient-to-br from-[#ffffffce] to-[#30bafe] text-black"} rounded-md p-1 font-legend h-full min-w-28 shadow-inner flex justify-center items-center`}
         >
           {button1}
         </button>
@@ -333,7 +427,7 @@ const ComparisonMetrics = () => {
               setButton4
             );
           }}
-          className="tab bg-gradient-to-br from-[#ffffffce] to-[#030169]  font-legend rounded-md p-1 text-white h-full min-w-28 shadow-inner flex justify-center items-center"
+          className={`tab ${isDarkMode ? "bg-gradient-to-br from-[#ffffffce] to-[#030169] text-white" : "bg-gradient-to-br from-[#ffffffce] to-[#30bafe] text-black"} rounded-md p-1 font-legend h-full min-w-28 shadow-inner flex justify-center items-center`}
         >
           {button2}
         </button>
@@ -350,14 +444,14 @@ const ComparisonMetrics = () => {
               setButton4
             );
           }}
-          className="tab bg-gradient-to-br from-[#ffffffce] to-[#030169] font-legend rounded-md p-1 text-white h-full min-w-28 shadow-inner flex justify-center items-center"
+          className={`tab ${isDarkMode ? "bg-gradient-to-br from-[#ffffffce] to-[#030169] text-white" : "bg-gradient-to-br from-[#ffffffce] to-[#30bafe] text-black"} rounded-md p-1 font-legend h-full min-w-28 shadow-inner flex justify-center items-center`}
         >
           {button3}
         </button>
       </div>
       <div
         id="mainGraph"
-        className="graph shadow-inner shadow-slate-600 rounded-md bg-gradient-to-tr from-[#000000] to-[#1a1919] py-5 h-3/5 w-full text-white flex justify-center items-center px-5"
+        className={`graph shadow-inner rounded-md ${isDarkMode ? "text-white bg-gradient-to-tr from-[#000000] to-[#1a1919] shadow-slate-600" : "text-black bg-gradient-to-tr from-[#ffffff] to-[#d6e2e8] shadow-slate-300"} py-5 h-3/5 w-full flex justify-center items-center px-5`}
       >
         <DynamicChart id={"mainGraph"} chartData={chartData4} />
       </div>

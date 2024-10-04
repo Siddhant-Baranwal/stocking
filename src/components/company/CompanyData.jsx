@@ -102,8 +102,8 @@ const CompanyData = () => {
       <Layout style={{ marginLeft: collapsed ? "80px" : "200px" }}>
         <Content style={contentStyle}>
           {selectedComponent === "CompanyDashboard" && <CompanyDashboard isDarkMode={isDarkMode} toggleTheme={toggleTheme} />}
-          {selectedComponent === "ComparisonMetrics" && <ComparisonMetrics />}
-          {selectedComponent === "FuturePredictions" && <FuturePredictions />}
+          {selectedComponent === "ComparisonMetrics" && <ComparisonMetrics isDarkMode={isDarkMode} toggleTheme={toggleTheme} />}
+          {selectedComponent === "FuturePredictions" && <FuturePredictions isDarkMode={isDarkMode} toggleTheme={toggleTheme} />}
         </Content>
       </Layout>
     </Layout>

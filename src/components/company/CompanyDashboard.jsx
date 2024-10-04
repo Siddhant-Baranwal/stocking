@@ -434,7 +434,7 @@ const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
             <div className={`fixed-data top-2 shadow-inner h-full rounded-md flex  justify-center items-center backdrop-blur-sm bg-transparent gap-x-3 px-2 ${isDarkMode ? "shadow-[#444444]" : "shadow-[#bfbfbf]"}`}>
               <div className={`shadow-inner ${isDarkMode ? "shadow-[#281f47] bg-[#000000]" : "shadow-[#8aadbe] bg-[#ffffff]"} h-3/5 w-full rounded-lg`}>
                 <div className={`value ${isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "} font-proguerr text-xl  h-4/5 flex items-center justify-center rounded-b-lg`}>
-                  ${companyDetails.Market_Cap}
+                  `${(companyDetails.Market_Cap / 1000000).toFixed(2)} M`
                 </div>
                 <div className={`quantity ${isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "} h-1/5  flex justify-center rounded-b-lg text-sm `}>
                   Market Capital
