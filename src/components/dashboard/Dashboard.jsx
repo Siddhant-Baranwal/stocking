@@ -33,6 +33,7 @@ const Dashboard = () => {
       const Result = await axios.get(
         `http://localhost:5000/api/company/filtered-search?name=${Company}`
       );
+      console.log(Result)
       setResults(Result.data);
       setIsCompany(true); // Set company found status
     } catch (error) {
@@ -76,7 +77,7 @@ const Dashboard = () => {
       className="font-poppins text-white text-[1.7vw] box-border min-h-[100vh]"
       style={{
         backgroundImage:
-          "linear-gradient(to bottom, #13315c, #03045e, #0a1128 )",
+          "linear-gradient(to right, #03045e, #0a1128 )",
         textShadow: "0 0 2px white",
       }}
     >

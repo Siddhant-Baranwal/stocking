@@ -4,7 +4,7 @@ const LeftBarAbsent = () => {
   const user = "Siddhant";
   return (
     <div className="left">
-      <span className="hello">Hello, {user}</span>
+      <span className="hello">Hello, {user} !!</span>
       <div className="leftSub">
         <div className="card shadow-2xl">
           <div className="card-text">

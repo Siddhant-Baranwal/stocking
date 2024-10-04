@@ -23,7 +23,7 @@ export const computation = (params) => {
 
     // Number of companies in the same country.
     companyData.sameCountry = data.filter(item => item.Country===companyData.Country).length;
-
+    
     // Number of companies with greater diversity in the same country.
     companyData.gtrDiv = data.filter(item => item.Diversity>companyData.Diversity && item.Country===companyData.Country).length;
 

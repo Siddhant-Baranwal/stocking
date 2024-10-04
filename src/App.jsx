@@ -4,7 +4,6 @@ import Dashboard from "./components/dashboard/Dashboard";
 import Landing from "./components/landing/Landing";
 import ForgotPassword from "./components/landing/ForgotPassword";
 import ChangePassword from "./components/dashboard/ChangePassword";
-import PageWiseHistory from "./components/dashboard/PageWiseHistory"
 import Resetpassword from "./components/landing/Resetpassword";
 import CompanyData from "./components/company/CompanyData";
 
