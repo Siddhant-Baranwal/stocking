@@ -13,36 +13,39 @@ const Dashboard = () => {
   const [Company, setCompany] = useState("");
   const [isCompany, setIsCompany] = useState(false);
   const [Results, setResults] = useState([]);
-  const navigate=useNavigate();
+  const [showSide, setShowSide] = useState(window.innerWidth > 800);
+  const navigate = useNavigate();
+
+  // Handle company search input
   const changeHandler = (e) => {
     setCompany(e.target.value);
     console.log(Company);
   };
+
+  // Handle company search submission
   const searchHandler = async (e) => {
     e.preventDefault();
-    console.log(Company);
-    if (Company == "") {
-      return "Please enter somthing to search";
+    if (Company === "") {
+      return "Please enter something to search";
     }
-    
+
     try {
       const Result = await axios.get(
         `http://localhost:5000/api/company/filtered-search?name=${Company}`
       );
-      console.log(Result);
-      setResults(Result);
+      setResults(Result.data);
+      setIsCompany(true); // Set company found status
     } catch (error) {
       notification.error({
-        message: "error fetching data",
+        message: "Error fetching data",
       });
       console.log(error);
     }
   };
-  
-  //to call it  with sl_no  when user clicks on any of company 
+
+  // Handle setting history for a company based on sl_no
   const settingHistory = async (no) => {
     try {
-      //fetching results for computation
       const Companies = await axios.get(
         `http://localhost:5000/api/company/fetchall`
       );
@@ -59,20 +62,22 @@ const Dashboard = () => {
         "http://localhost:5000/api/user/updateHistory",
         payload
       );
-      console.log(UpdatedUser);
-      setCurrentUser(UpdatedUser);
-      navigate(`history/${Compwithcomputatn.id}`);
+      setCurrentUser(UpdatedUser.data);
+      navigate(`/history/${Compwithcomputatn.id}`);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
+  
 
   return (
     <div
-      className="dash"
+      className="font-poppins text-white text-[1.7vw] box-border min-h-[100vh]"
       style={{
         backgroundImage:
-        "radial-gradient(circle 800px at 50% 50%, #134074, #00072d)",
+          "linear-gradient(to bottom, #13315c, #03045e, #0a1128 )",
+        textShadow: "0 0 2px white",
       }}
     >
       <div className="head">
@@ -87,21 +92,20 @@ const Dashboard = () => {
           />
         </form>
       </div>
-      <div className="main">
-        {!isCompany && (
-          <div>
-            <LeftBarAbsent />
+      <div className="main flex">
+
+        {/* Main content based on company search */}
+        <div className="content flex-1">
+          {!isCompany ? <LeftBarAbsent /> : <LeftBarPresent />}
+        </div>
+
+        <div className="viewSidebar sidetab w-[0vw]">
           </div>
-        )}
-        {isCompany && (
-          <div>
-            <LeftBarPresent />
-          </div>
-        )}
-        <History />
+          <History />
       </div>
     </div>
   );
 };
 
 export default Dashboard;
+
