@@ -24,7 +24,7 @@ const items = [
 const CompanyData = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedComponent, setSelectedComponent] = useState("CompanyDashboard");
-
+  
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
     return savedTheme ? JSON.parse(savedTheme) : true;
