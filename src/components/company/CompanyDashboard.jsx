@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DynamicChart from "./DynamicChart";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { auth } from "../../firebaseconfig.js";
 
 const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
   const { companyId } = useParams();
@@ -8,7 +9,16 @@ const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
   const [companyDetails, setCompanyDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
+  const user = auth.currentUser;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user === null) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const [chartData1, setChartData1] = useState({
     chart: {
       type: "area",
@@ -262,7 +272,6 @@ const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
     fetchCompanyDetails();
   }, [companyId]);
 
-
   useEffect(() => {
     if (companyDetails) {
       setChartData1((prevData) => ({
@@ -270,7 +279,7 @@ const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
         series: [
           {
             ...prevData.series[0],
-            data: companyDetails.Stock_Price || [], 
+            data: companyDetails.Stock_Price || [],
           },
         ],
       }));
@@ -307,7 +316,6 @@ const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
     }
   }, [companyDetails]);
 
-
   useEffect(() => {
     setChartData1((prevData) => ({
       ...prevData,
@@ -324,8 +332,11 @@ const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
           fillColor: {
             linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
             stops: [
-              [0, isDarkMode ? "rgba(0, 5, 107, 1)" : "#4ea8de"], 
-              [1, isDarkMode ? "rgba(0, 0, 0, 0.5)" : "rgba(255, 255, 255, 0.5)"],
+              [0, isDarkMode ? "rgba(0, 5, 107, 1)" : "#4ea8de"],
+              [
+                1,
+                isDarkMode ? "rgba(0, 0, 0, 0.5)" : "rgba(255, 255, 255, 0.5)",
+              ],
             ],
           },
         },
@@ -347,8 +358,11 @@ const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
           fillColor: {
             linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
             stops: [
-              [0, isDarkMode ? "rgba(0, 5, 107, 1)" : "#4ea8de"], 
-              [1, isDarkMode ? "rgba(0, 0, 0, 0.5)" : "rgba(255, 255, 255, 0.5)"],
+              [0, isDarkMode ? "rgba(0, 5, 107, 1)" : "#4ea8de"],
+              [
+                1,
+                isDarkMode ? "rgba(0, 0, 0, 0.5)" : "rgba(255, 255, 255, 0.5)",
+              ],
             ],
           },
         },
@@ -370,8 +384,11 @@ const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
           fillColor: {
             linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
             stops: [
-              [0, isDarkMode ? "rgba(0, 5, 107, 1)" : "#4ea8de"], 
-              [1, isDarkMode ? "rgba(0, 0, 0, 0.5)" : "rgba(255, 255, 255, 0.5)"],
+              [0, isDarkMode ? "rgba(0, 5, 107, 1)" : "#4ea8de"],
+              [
+                1,
+                isDarkMode ? "rgba(0, 0, 0, 0.5)" : "rgba(255, 255, 255, 0.5)",
+              ],
             ],
           },
         },
@@ -393,8 +410,11 @@ const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
           fillColor: {
             linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
             stops: [
-              [0, isDarkMode ? "rgba(0, 5, 107, 1)" : "#4ea8de"], 
-              [1, isDarkMode ? "rgba(0, 0, 0, 0.5)" : "rgba(255, 255, 255, 0.5)"],
+              [0, isDarkMode ? "rgba(0, 5, 107, 1)" : "#4ea8de"],
+              [
+                1,
+                isDarkMode ? "rgba(0, 0, 0, 0.5)" : "rgba(255, 255, 255, 0.5)",
+              ],
             ],
           },
         },
@@ -403,68 +423,168 @@ const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
   }, [isDarkMode]);
 
   if (loading) {
-    return <div className="text-xl text-blue-600 font-poppins text-center">Loading company details...</div>;
+    return (
+      <div className="text-xl text-blue-600 font-poppins text-center">
+        Loading company details...
+      </div>
+    );
   }
 
   if (error) {
     return <div>Error: {error}</div>;
   }
 
-
   return (
-    <div className={`h-screen ${isDarkMode ? "bg-gradient-to-tr from-[#000000] to-[#000000ee]" : "bg-white"}`}>
-      <div className={`heading w-full py-3 ${isDarkMode ? "text-slate-400 hover:text-[rgb(216,210,250)]" : "text-zinc-500 hover:text-gray-900"} font-lexend font-extralight flex justify-center items-center text-5xl mb-6`}>
+    <div
+      className={`h-screen ${
+        isDarkMode
+          ? "bg-gradient-to-tr from-[#000000] to-[#000000ee]"
+          : "bg-white"
+      }`}
+    >
+      <div
+        className={`heading w-full py-3 ${
+          isDarkMode
+            ? "text-slate-400 hover:text-[rgb(216,210,250)]"
+            : "text-zinc-500 hover:text-gray-900"
+        } font-lexend font-extralight flex justify-center items-center text-5xl mb-6`}
+      >
         COMPANY DASHBOARD
       </div>
       <div className="main-content  flex h-1/2 gap-x-2 justify-around mb-6">
         <div className="left-content w-[30%]  flex flex-col gap-y-4 ">
           <div className="relative h-1/2">
-            <div className={`name top-2 shadow-inner h-full rounded-md flex flex-col justify-center items-left backdrop-blur-sm bg-transparent gap-y-4 ${isDarkMode ? "shadow-[#444444]" : "shadow-[#bfbfbf]"}`}>
-              <div className={`company-name ${isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "} pl-4 text-3xl font-lexend`}>
+            <div
+              className={`name top-2 shadow-inner h-full rounded-md flex flex-col justify-center items-left backdrop-blur-sm bg-transparent gap-y-4 ${
+                isDarkMode ? "shadow-[#444444]" : "shadow-[#bfbfbf]"
+              }`}
+            >
+              <div
+                className={`company-name ${
+                  isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "
+                } pl-4 text-3xl font-lexend`}
+              >
                 {companyDetails.Name}
               </div>
               <div className="country-name pl-4">
-                <span className={`text-2xl ${isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "}`}>{companyDetails.Country}</span>
-                <span className={`text-sm px-2 ${isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "}`}>({companyDetails.Country_Code})</span>
+                <span
+                  className={`text-2xl ${
+                    isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "
+                  }`}
+                >
+                  {companyDetails.Country}
+                </span>
+                <span
+                  className={`text-sm px-2 ${
+                    isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "
+                  }`}
+                >
+                  ({companyDetails.Country_Code})
+                </span>
               </div>
             </div>
-            <div className={`absolute rounded-md top-0 left-0 w-full h-full hover:opacity-100 ${isDarkMode ? "bg-gradient-to-tr from-transparent to-[#3405b491] via-transparent" : "bg-gradient-to-tr from-transparent to-[#34e0f391] via-transparent"}`}></div>
+            <div
+              className={`absolute rounded-md top-0 left-0 w-full h-full hover:opacity-100 ${
+                isDarkMode
+                  ? "bg-gradient-to-tr from-transparent to-[#3405b491] via-transparent"
+                  : "bg-gradient-to-tr from-transparent to-[#34e0f391] via-transparent"
+              }`}
+            ></div>
           </div>
           <div className="relative h-1/2">
-            <div className={`fixed-data top-2 shadow-inner h-full rounded-md flex  justify-center items-center backdrop-blur-sm bg-transparent gap-x-3 px-2 ${isDarkMode ? "shadow-[#444444]" : "shadow-[#bfbfbf]"}`}>
-              <div className={`shadow-inner ${isDarkMode ? "shadow-[#281f47] bg-[#000000]" : "shadow-[#8aadbe] bg-[#ffffff]"} h-3/5 w-full rounded-lg`}>
-                <div className={`value ${isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "} font-proguerr text-2xl  h-4/5 flex items-center justify-center rounded-b-lg`}>
+            <div
+              className={`fixed-data top-2 shadow-inner h-full rounded-md flex  justify-center items-center backdrop-blur-sm bg-transparent gap-x-3 px-2 ${
+                isDarkMode ? "shadow-[#444444]" : "shadow-[#bfbfbf]"
+              }`}
+            >
+              <div
+                className={`shadow-inner ${
+                  isDarkMode
+                    ? "shadow-[#281f47] bg-[#000000]"
+                    : "shadow-[#8aadbe] bg-[#ffffff]"
+                } h-3/5 w-full rounded-lg`}
+              >
+                <div
+                  className={`value ${
+                    isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "
+                  } font-proguerr text-2xl  h-4/5 flex items-center justify-center rounded-b-lg`}
+                >
                   {`${(companyDetails.Market_Cap / 1000000).toFixed(2)} M`}
                 </div>
-                <div className={`quantity ${isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "} h-1/5  flex justify-center rounded-b-lg text-sm `}>
+                <div
+                  className={`quantity ${
+                    isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "
+                  } h-1/5  flex justify-center rounded-b-lg text-sm `}
+                >
                   Market Capital
                 </div>
               </div>
-              <div className={`shadow-inner ${isDarkMode ? "shadow-[#281f47] bg-[#000000]" : "shadow-[#8aadbe] bg-[#ffffff]"} h-3/5 w-full rounded-lg`}>
-                <div className={`value ${isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "} font-proguerr text-3xl  h-4/5 flex items-center justify-center rounded-b-lg`}>
+              <div
+                className={`shadow-inner ${
+                  isDarkMode
+                    ? "shadow-[#281f47] bg-[#000000]"
+                    : "shadow-[#8aadbe] bg-[#ffffff]"
+                } h-3/5 w-full rounded-lg`}
+              >
+                <div
+                  className={`value ${
+                    isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "
+                  } font-proguerr text-3xl  h-4/5 flex items-center justify-center rounded-b-lg`}
+                >
                   {companyDetails.Diversity}%
                 </div>
-                <div className={`quantity ${isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "} h-1/5  flex justify-center rounded-b-lg text-sm `}>
+                <div
+                  className={`quantity ${
+                    isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "
+                  } h-1/5  flex justify-center rounded-b-lg text-sm `}
+                >
                   Diversity
                 </div>
               </div>
-              <div className={`shadow-inner ${isDarkMode ? "shadow-[#281f47] bg-[#000000]" : "shadow-[#8aadbe] bg-[#ffffff]"} h-3/5 w-full rounded-lg`}>
-                <div className={`value ${isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "} font-proguerr text-3xl  h-4/5 flex items-center justify-center rounded-b-lg`}>
+              <div
+                className={`shadow-inner ${
+                  isDarkMode
+                    ? "shadow-[#281f47] bg-[#000000]"
+                    : "shadow-[#8aadbe] bg-[#ffffff]"
+                } h-3/5 w-full rounded-lg`}
+              >
+                <div
+                  className={`value ${
+                    isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "
+                  } font-proguerr text-3xl  h-4/5 flex items-center justify-center rounded-b-lg`}
+                >
                   53+
                 </div>
-                <div className={`quantity ${isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "} h-1/5  flex justify-center rounded-b-lg text-sm `}>
+                <div
+                  className={`quantity ${
+                    isDarkMode ? "text-[#18FEFE] " : "text-[#1a87cb] "
+                  } h-1/5  flex justify-center rounded-b-lg text-sm `}
+                >
                   <span>
-                    Firms <sub className=" text-[10px]">({companyDetails.Country_Code})</sub>
+                    Firms{" "}
+                    <sub className=" text-[10px]">
+                      ({companyDetails.Country_Code})
+                    </sub>
                   </span>
                 </div>
               </div>
             </div>
-            <div className={`absolute rounded-md top-0 left-0 w-full h-full ${isDarkMode ? "bg-gradient-to-tr from-transparent to-[#3405b491] via-transparent" : "bg-gradient-to-tr from-transparent to-[#34e0f391] via-transparent"}`}></div>
+            <div
+              className={`absolute rounded-md top-0 left-0 w-full h-full ${
+                isDarkMode
+                  ? "bg-gradient-to-tr from-transparent to-[#3405b491] via-transparent"
+                  : "bg-gradient-to-tr from-transparent to-[#34e0f391] via-transparent"
+              }`}
+            ></div>
           </div>
         </div>
         <div
           id="mainGraph"
-          className={`right-content w-[65%] shadow-inner rounded-md p-4 flex justify-center items-center ${isDarkMode ? "text-white bg-gradient-to-tr from-[#000000] to-[#1a1919] shadow-slate-600" : "text-black bg-gradient-to-tr from-[#ffffff] to-[#d6e2e8] shadow-slate-400"}`}
+          className={`right-content w-[65%] shadow-inner rounded-md p-4 flex justify-center items-center ${
+            isDarkMode
+              ? "text-white bg-gradient-to-tr from-[#000000] to-[#1a1919] shadow-slate-600"
+              : "text-black bg-gradient-to-tr from-[#ffffff] to-[#d6e2e8] shadow-slate-400"
+          }`}
         >
           <DynamicChart id="mainGraph" chartData={chartData1} />
         </div>
@@ -475,7 +595,11 @@ const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
           onClick={() =>
             swapData(chartData2, setChartData2, chartData1, setChartData1)
           }
-          className={`sub-graph h-4/5 w-full shadow-inner rounded-md ${isDarkMode ? "text-white bg-gradient-to-tr from-[#000000] to-[#1a1919] shadow-slate-600" : "text-black bg-gradient-to-tr from-[#ffffff] to-[#d6e2e8] shadow-slate-400"}`}
+          className={`sub-graph h-4/5 w-full shadow-inner rounded-md ${
+            isDarkMode
+              ? "text-white bg-gradient-to-tr from-[#000000] to-[#1a1919] shadow-slate-600"
+              : "text-black bg-gradient-to-tr from-[#ffffff] to-[#d6e2e8] shadow-slate-400"
+          }`}
         >
           <DynamicChart id="sub-graph1" chartData={chartData2} />
         </div>
@@ -484,7 +608,11 @@ const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
           onClick={() =>
             swapData(chartData3, setChartData3, chartData1, setChartData1)
           }
-          className={`sub-graph h-4/5 w-full shadow-inner rounded-md ${isDarkMode ? "text-white bg-gradient-to-tr from-[#000000] to-[#1a1919] shadow-slate-600" : "text-black bg-gradient-to-tr from-[#ffffff] to-[#d6e2e8] shadow-slate-400"}`}
+          className={`sub-graph h-4/5 w-full shadow-inner rounded-md ${
+            isDarkMode
+              ? "text-white bg-gradient-to-tr from-[#000000] to-[#1a1919] shadow-slate-600"
+              : "text-black bg-gradient-to-tr from-[#ffffff] to-[#d6e2e8] shadow-slate-400"
+          }`}
         >
           <DynamicChart id="sub-graph2" chartData={chartData3} />
         </div>
@@ -493,7 +621,11 @@ const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
           onClick={() =>
             swapData(chartData4, setChartData4, chartData1, setChartData1)
           }
-          className={`sub-graph h-4/5 w-full shadow-inner rounded-md ${isDarkMode ? "text-white bg-gradient-to-tr from-[#000000] to-[#1a1919] shadow-slate-600" : "text-black bg-gradient-to-tr from-[#ffffff] to-[#d6e2e8] shadow-slate-400"}`}
+          className={`sub-graph h-4/5 w-full shadow-inner rounded-md ${
+            isDarkMode
+              ? "text-white bg-gradient-to-tr from-[#000000] to-[#1a1919] shadow-slate-600"
+              : "text-black bg-gradient-to-tr from-[#ffffff] to-[#d6e2e8] shadow-slate-400"
+          }`}
         >
           <DynamicChart id="sub-graph3" chartData={chartData4} />
         </div>

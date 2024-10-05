@@ -21,6 +21,10 @@ const Login = ({ toggleForm }) => {
 
   const [OTP, setOTP] = useState(new Array(6).fill(""));
 
+  const forgetPassword = () => {
+    navigate("/forgot-password");
+  };
+
   // Handle OTP input change
   const handleChange = (element, index) => {
     if (isNaN(element.value)) return;
@@ -180,7 +184,10 @@ const Login = ({ toggleForm }) => {
       </form>
 
       <div className="mt-4 flex justify-between text-sm mx-2">
-        <p className="text-zinc-300 underline hover:text-blue-500">
+        <p
+          className="text-zinc-300 underline hover:text-blue-500"
+          onClick={forgetPassword}
+        >
           {" "}
           Forgot Password
         </p>

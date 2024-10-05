@@ -1,18 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ThemeSwitch from "../theme/ThemeSwitch";
+import { auth } from "../../firebaseconfig.js";
+import { signOut } from "firebase/auth";
 
 const History = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const navigate = useNavigate();
 
+  // Use useEffect to handle authentication-related side effects
+  useEffect(() => {
+    if (auth.currentUser === null) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const deleteCookie = () => {
-    localStorage.removeItem("userinfo");
-    navigate("/");
+    signOut(auth)
+      .then(() => {
+        console.log("User signed out successfully");
+        localStorage.removeItem("userinfo");
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error("Error signing out: ", error);
+      });
   };
 
   const changePassword = () => {
-    navigate("/change-password");
+    navigate("/reset-password");
   };
 
   const toggleSidebar = () => {
@@ -20,14 +36,14 @@ const History = () => {
   };
 
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    const savedTheme = localStorage.getItem('theme');
+    const savedTheme = localStorage.getItem("theme");
     return savedTheme ? JSON.parse(savedTheme) : true;
   });
 
   const toggleTheme = () => {
     setIsDarkMode((prevMode) => {
       const newMode = !prevMode;
-      localStorage.setItem('theme', JSON.stringify(newMode));
+      localStorage.setItem("theme", JSON.stringify(newMode));
       return newMode;
     });
   };
@@ -41,7 +57,7 @@ const History = () => {
     "Reliance",
     "heroku",
     "Microsoft",
-    "Ziome"
+    "Ziome",
   ];
 
   const links = () => {
@@ -78,7 +94,11 @@ const History = () => {
         } lg:translate-x-0 flex flex-col`}
       >
         <div className="flex flex-col items-center">
-          <img src="/profile.svg" className="w-12 h-12 sm:w-14 sm:h-14" alt="Profile" />
+          <img
+            src="/profile.svg"
+            className="w-12 h-12 sm:w-14 sm:h-14"
+            alt="Profile"
+          />
           <h2 className="text-2xl sm:text-3xl font-bold">username</h2>
           <p className="text-lg sm:text-xl mb-1">saksham@example.com</p>
 
@@ -95,7 +115,9 @@ const History = () => {
         </div>
 
         <div className="flex-1 overflow-y-auto mt-4 border-t-2 border-white">
-          <h3 className="text-xl sm:text-2xl font-bold text-center mb-4">Search History</h3>
+          <h3 className="text-xl sm:text-2xl font-bold text-center mb-4">
+            Search History
+          </h3>
           <div className="font-proguerr">{links()}</div>
         </div>
 
@@ -111,7 +133,3 @@ const History = () => {
 };
 
 export default History;
-
-
-
-
