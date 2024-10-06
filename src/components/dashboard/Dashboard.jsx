@@ -77,7 +77,7 @@ const Dashboard = () => {
       console.log(error);
     }
   };
-
+  
   return (
     <div
       className="font-poppins text-white text-[1.7vw] box-border min-h-[100vh]"
@@ -92,7 +92,7 @@ const Dashboard = () => {
             type="text"
             name="search"
             id="search"
-            placeholder="Search company"
+            placeholder="🔍Search company"
             value={Company}
             onChange={changeHandler}
           />

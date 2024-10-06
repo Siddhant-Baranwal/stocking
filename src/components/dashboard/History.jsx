@@ -69,7 +69,7 @@ const History = () => {
     return currentUser?.history?.map((item, index) => (
       <Link
         key={item}
-        className={`historyList block text-xl font-thin py-2 px-4 border-black border-[1px] ${
+        className={`historyList block text-xl hover:text-gray-100 py-2 px-4 border-black border-[1px] ${
           index % 2 === 0
             ? "bg-gradient-to-r from-[#09112cc4] to-[transparent] hover:bg-blue-950"
             : "bg-gradient-to-r from-[#4e63b187] to-[transparent] hover:bg-blue-950"
@@ -101,26 +101,23 @@ const History = () => {
             className="w-12 h-12 sm:w-14 sm:h-14"
             alt="Profile"
           />
-          <h2 className="text-2xl sm:text-3xl font-bold">{currentUser?.name}</h2>
-          <p className="text-lg sm:text-xl mb-1">{currentUser?.email}</p>
+          <h2 className="text-2xl sm:text-3xl font-proguerr">{currentUser?.name}</h2>
+          <p className="text-lg sm:text-xl mb-1 italic">{currentUser?.email}</p>
 
           <button
             onClick={changePassword}
-            className="mt-1 text-white underline py-2 px-2 rounded-lg text-base sm:text-lg hover:text-blue-400"
+            className="mt-1 text-gray-300 underline py-2 px-2 rounded-lg text-base sm:text-lg hover:text-blue-400 font-lexend transform transition-all duration-200 mb-4"
           >
             Change Password
           </button>
-
-          <div className="mb-2">
-            <ThemeSwitch isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
-          </div>
+          
         </div>
 
         <div className="flex-1 overflow-y-auto mt-4 border-t-2 border-white">
           <h3 className="text-xl sm:text-2xl font-bold text-center mb-4">
             Search History
           </h3>
-          <div className="font-proguerr">{links()}</div>
+          <div className="font-proguerr font-normal">{links()}</div>
         </div>
 
         <button
