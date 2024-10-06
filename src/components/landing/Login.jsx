@@ -13,7 +13,7 @@ const Login = ({ toggleForm }) => {
     formState: { errors },
     b,
   } = useForm();
-
+  console.log(import.meta.env.VITE_BACKEND_URL);
   const [isLoading, setIsLoading] = useState(false);
   const [Userobj, setUserObj] = useState(null);
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ const Login = ({ toggleForm }) => {
       },
     };
     const { data } = await axios.post(
-      `http://localhost:5000/api/${str}`,
+      `${import.meta.env.VITE_BACKEND_URL}/api/${str}`,
       payload,
       config
     );

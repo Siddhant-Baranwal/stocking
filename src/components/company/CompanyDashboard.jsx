@@ -253,7 +253,7 @@ const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
     const fetchCompanyDetails = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/api/company/getcomapnydetails/${companyId}`
+          `${import.meta.env.VITE_BACKEND_URL}/api/company/getcomapnydetails/${companyId}`
         );
 
         if (!response.ok) {

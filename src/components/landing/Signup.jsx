@@ -40,7 +40,7 @@ const Signup = ({ toggleForm }) => {
       },
     };
     const { data } = await axios.post(
-      `http://localhost:5000/api/${str}`,
+      `${import.meta.env.VITE_BACKEND_URL}/api/${str}`,
       payload,
       config
     );

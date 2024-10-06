@@ -31,7 +31,7 @@ const Dashboard = () => {
 
     try {
       const Result = await axios.get(
-        `http://localhost:5000/api/company/filtered-search?name=${Company}`
+        `${import.meta.env.VITE_BACKEND_URL}/api/company/filtered-search?name=${Company}`
       );
       console.log(Result)
       setResults(Result.data);
@@ -48,7 +48,7 @@ const Dashboard = () => {
   const settingHistory = async (no) => {
     try {
       const Companies = await axios.get(
-        `http://localhost:5000/api/company/fetchall`
+        `${import.meta.env.VITE_BACKEND_URL}/api/company/fetchall`
       );
       const Compwithcomputatn = computation({
         sl_no: no,
@@ -60,7 +60,7 @@ const Dashboard = () => {
         newEntry: Compwithcomputatn,
       };
       const UpdatedUser = await axios.post(
-        "http://localhost:5000/api/user/updateHistory",
+        `${import.meta.env.VITE_BACKEND_URL}/api/user/updateHistory`,
         payload
       );
       setCurrentUser(UpdatedUser.data);
