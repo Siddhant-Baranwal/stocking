@@ -89,7 +89,7 @@ const History = () => {
       </button>
 
       <div
-        className={`fixed top-0 right-0 h-screen bg-gradient-to-r from-[#010204] to-[#010204c6] text-white w-[60vw] sm:w-[35vw] lg:w-[25vw] p-4 shadow-2xl transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-screen bg-gradient-to-r from-[#000000] to-[#0003099c] text-white w-[60vw] sm:w-[35vw] lg:w-[25vw] p-4 shadow-2xl transition-transform duration-300 ease-in-out ${
           showSidebar ? "translate-x-0" : "translate-x-full"
         } lg:translate-x-0 flex flex-col`}
       >

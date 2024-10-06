@@ -89,7 +89,7 @@
   display: inline-block;
   background: linear-gradient(to right, rgba(0, 0, 0, 0.637), transparent);
   margin: 15px;
-  padding: 1.5vw;
+  padding: 1.2vw 0.7vw;
   font-family: 'poppins';
   font-weight: 500;
   height: auto;
@@ -97,8 +97,9 @@
 }
 
 .card-text {
-  font-size: 1.4vw;
+  font-size: 1.8vw;
   margin: 10px 0;
+  text-align: center;
 }
 
 
@@ -151,8 +152,11 @@
 }
 
 @media (max-width: 480px) {
+
   .card-text {
     font-size: 3vw;
+    text-align: center;
+    min-width: 50%;
   }
 
   .card img {
