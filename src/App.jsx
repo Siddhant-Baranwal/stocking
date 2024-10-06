@@ -1,12 +1,15 @@
 import React, { useContext } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Dashboard from "./components/dashboard/Dashboard";
 import Landing from "./components/landing/Landing";
 import ForgotPassword from "./components/landing/ForgotPassword";
 import Resetpassword from "./components/landing/Resetpassword";
 import CompanyData from "./components/company/CompanyData";
+import { AuthContext } from "./Context/AuthContext";
 
 function App() {
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
+ console.log(currentUser);
   return (
     <>
       <Routes>

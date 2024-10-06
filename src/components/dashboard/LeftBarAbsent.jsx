@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../../Context/AuthContext";
 
 const LeftBarAbsent = () => {
-  const user = "Siddhant";
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
+
   return (
     <div className="left">
-      <span className="hello">Hello, {user} !!</span>
+      <span className="hello">Hello, {currentUser?.name || "user"} !!</span>
       <div className="leftSub">
         <div className="card shadow-2xl">
           <div className="card-text">
