@@ -85,7 +85,7 @@ const History = () => {
     <>
       <button
         onClick={toggleSidebar}
-        className="fixed top-4 right-4 z-50 block lg:hidden p-3 text-white bg-blue-950 rounded-md focus:outline-none text-lg"
+        className="fixed top-4 right-4 z-50 block lg:hidden text-white bg-blue-950 rounded-md focus:outline-none text-lg p-3"
       >
         {showSidebar ? "X" : "☰"}
       </button>
