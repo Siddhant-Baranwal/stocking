@@ -34,24 +34,24 @@ export const computation = (params) => {
     companyData.expensePercentChange = change(companyData.Expenses);
 
     // Number of companies having greater stock price, market share, revenue and expense globally.
-    companyData.gtrStockGlobal = data.filter(item => item.Stock_Price>companyData.Stock_Price).length;
-    companyData.gtrMarketGlobal = data.filter(item => item.Market_Share>companyData.Market_Share).length;
-    companyData.gtrRevenueGlobal = data.filter(item => item.Revenue>companyData.Revenue).length;
-    companyData.gtrExpenseGlobal = data.filter(item => item.Expenses>companyData.Expenses).length;
+    companyData.gtrStockGlobal = data.filter(item => item.Stock_Price[9]>companyData.Stock_Price[9]).length;
+    companyData.gtrMarketGlobal = data.filter(item => item.Market_Share[9]>companyData.Market_Share[9]).length;
+    companyData.gtrRevenueGlobal = data.filter(item => item.Revenue[9]>companyData.Revenue[9]).length;
+    companyData.gtrExpenseGlobal = data.filter(item => item.Expenses[9]>companyData.Expenses[9]).length;
 
     // Number of companies having greater stock price, market share, revenue and expense domestically.
-    companyData.gtrStockDomestic = data.filter(item => item.Stock_Price>companyData.Stock_Price && item.Country===companyData.country).length;
-    companyData.gtrMarketDomestic = data.filter(item => item.Market_Share>companyData.Market_Share && item.Country===companyData.country).length;
-    companyData.gtrRevenueDomestic = data.filter(item => item.Revenue>companyData.Revenue && item.Country===companyData.country).length;
-    companyData.gtrExpenseDomestic = data.filter(item => item.Expenses>companyData.Expenses && item.Country===companyData.country).length;
+    companyData.gtrStockDomestic = data.filter(item => item.Stock_Price[9]>companyData.Stock_Price[9] && item.Country===companyData.Country).length;
+    companyData.gtrMarketDomestic = data.filter(item => item.Market_Share[9]>companyData.Market_Share[9] && item.Country===companyData.Country).length;
+    companyData.gtrRevenueDomestic = data.filter(item => item.Revenue[9]>companyData.Revenue[9] && item.Country===companyData.Country).length;
+    companyData.gtrExpenseDomestic = data.filter(item => item.Expenses[9]>companyData.Expenses[9] && item.Country===companyData.Country).length;
 
     // A general number for company's growth. If growth=1, then decline. If growth=2, then stable. Else, growth.
     companyData.growth = sumPositive(companyData.stockPercentChange) + sumPositive(companyData.marketPercentChange) + sumPositive(companyData.revenuePercentChange) + sumPositive(companyData.expensePercentChange);
 
     // Predict the future stock price, market share, revenue and expense.
-    companyData.futureStock = companyData.Stock_Price*(100+avgArray(companyData.stockPercentChange))/100;
-    companyData.futureMarket = companyData.Market_Share*(100+avgArray(companyData.marketPercentChange))/100;
-    companyData.futureRevenue = companyData.Revenue*(100+avgArray(companyData.revenuePercentChange))/100;
-    companyData.futureExpense = companyData.Expenses*(100+avgArray(companyData.expensePercentChange))/100;
+    companyData.futureStock = companyData.Stock_Price[9]*(100+avgArray(companyData.stockPercentChange))/100;
+    companyData.futureMarket = companyData.Market_Share[9]*(100+avgArray(companyData.marketPercentChange))/100;
+    companyData.futureRevenue = companyData.Revenue[9]*(100+avgArray(companyData.revenuePercentChange))/100;
+    companyData.futureExpense = companyData.Expenses[9]*(100+avgArray(companyData.expensePercentChange))/100;
     return companyData;
 }
