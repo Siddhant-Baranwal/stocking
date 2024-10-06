@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { auth } from "../../firebaseconfig";
+import { notification } from "antd";
+import { updatePassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Resetpassword = () => {
   const {
@@ -8,8 +12,25 @@ const Resetpassword = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const user = auth.currentUser;
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user === null) {
+      navigate("/");
+    }
+  }, [navigate]);
+
+  const changePassword = (obj) => {
+    updatePassword(user, obj.password)
+      .then(() => {
+        notification.success({
+          message: "Password changed successfully!",
+        });
+      })
+      .catch((error) => {
+        console.error("Error updating password: ", error);
+      });
   };
 
   return (
@@ -19,8 +40,8 @@ const Resetpassword = () => {
         <h2 className="text-2xl text-center mb-5 text-white font-bold">
           Reset Password
         </h2>
-        
-        <form onSubmit={handleSubmit(onSubmit)}>
+
+        <form onSubmit={handleSubmit(changePassword)}>
           <div className="relative mb-5 mt-8">
             <input
               type="password"
