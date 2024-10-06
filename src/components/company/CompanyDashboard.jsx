@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DynamicChart from "./DynamicChart";
 import { useNavigate, useParams } from "react-router-dom";
-import { auth } from "../../firebaseconfig.js";
+// import { auth } from "../../firebaseconfig.js";
 
 const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
   const { companyId } = useParams();
@@ -10,14 +10,14 @@ const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const user = auth.currentUser;
-  const navigate = useNavigate();
+  // const user = auth.currentUser;
+  // const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user === null) {
-      navigate("/");
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   if (user === null) {
+  //     navigate("/");
+  //   }
+  // }, [navigate]);
 
   const [chartData1, setChartData1] = useState({
     chart: {

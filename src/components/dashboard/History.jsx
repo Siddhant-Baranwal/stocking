@@ -9,11 +9,11 @@ const History = () => {
   const navigate = useNavigate();
 
   // Use useEffect to handle authentication-related side effects
-  useEffect(() => {
-    if (auth.currentUser === null) {
-      navigate("/");
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   if (auth.currentUser === null) {
+  //     navigate("/");
+  //   }
+  // }, [navigate]);
 
   const deleteCookie = () => {
     signOut(auth)
