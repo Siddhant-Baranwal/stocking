@@ -24,7 +24,7 @@ const items = [
 const CompanyData = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [selectedComponent, setSelectedComponent] = useState("CompanyDashboard");
-  
+
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const savedTheme = localStorage.getItem('theme');
     return savedTheme ? JSON.parse(savedTheme) : true;
@@ -59,48 +59,38 @@ const CompanyData = () => {
   const contentStyle = {
     margin: "4px",
     padding: "16px",
-    background: isDarkMode ? "#1c1c1c" : "#dddddd", 
+    background: isDarkMode ? "#1c1c1c" : "#dddddd",
     borderRadius: "8px",
     boxShadow: "0 0 10px rgba(0, 0, 0, 0.5)",
-    border: isDarkMode ? "1px solid #333" : "1px solid #ddd", 
+    border: isDarkMode ? "1px solid #333" : "1px solid #ddd",
     color: isDarkMode ? "#ffffff" : "#000000",
     overflowY: "auto",
     maxHeight: "100vh",
   };
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout className="min-h-screen flex flex-col md:flex-row">
       <Sider
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
-        style={{
-          overflow: "hidden",
-          position: "fixed",
-          height: "100vh",
-          left: 0,
-          top: 0,
-          zIndex: 10,
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          backgroundColor: isDarkMode ? "#001529" : "#f5f5f5",
-        }}
+        className={`fixed top-0 left-0 z-10 h-screen ${isDarkMode ? 'bg-[#001529]' : 'bg-gray-100'} flex flex-col justify-between`}
+        width={collapsed ? 80 : 200}
       >
         <div className="demo-logo-vertical" />
         <Menu
-          theme={isDarkMode ? "dark" : "light"} 
+          theme={isDarkMode ? "dark" : "light"}
           defaultSelectedKeys={["1"]}
           mode="inline"
           items={items}
           onClick={handleMenuItemClick}
         />
-        <div className="flex items-center" style={{ padding: "10px" }}>
+        <div className="flex items-center justify-center py-4">
           <ThemeSwitch isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
         </div>
       </Sider>
-      <Layout style={{ marginLeft: collapsed ? "80px" : "200px" }}>
-        <Content style={contentStyle}>
+      <Layout className={`transition-all duration-300 ${collapsed ? "ml-20" : "ml-52"}`}>
+        <Content className="m-4 p-4 rounded-md shadow-md max-h-screen overflow-y-auto" style={contentStyle}>
           {selectedComponent === "CompanyDashboard" && <CompanyDashboard isDarkMode={isDarkMode} toggleTheme={toggleTheme} />}
           {selectedComponent === "ComparisonMetrics" && <ComparisonMetrics isDarkMode={isDarkMode} toggleTheme={toggleTheme} />}
           {selectedComponent === "FuturePredictions" && <FuturePredictions isDarkMode={isDarkMode} toggleTheme={toggleTheme} />}
