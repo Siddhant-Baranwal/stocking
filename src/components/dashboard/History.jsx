@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ThemeSwitch from "../theme/ThemeSwitch";
 import { auth } from "../../firebaseconfig.js";
 import { signOut } from "firebase/auth";
+import { AuthContext } from "../../Context/AuthContext.jsx";
 
 const History = () => {
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
   const [showSidebar, setShowSidebar] = useState(false);
   const navigate = useNavigate();
 
@@ -16,10 +18,10 @@ const History = () => {
   // }, [navigate]);
 
   const deleteCookie = () => {
+    localStorage.removeItem("userinfo");
     signOut(auth)
       .then(() => {
         console.log("User signed out successfully");
-        localStorage.removeItem("userinfo");
         navigate("/");
       })
       .catch((error) => {
@@ -61,10 +63,10 @@ const History = () => {
   ];
 
   const links = () => {
-    if (companyList.length === 0) {
+    if (currentUser?.history?.length === 0) {
       return <div className="text-center py-4">No history...</div>;
     }
-    return companyList.map((item, index) => (
+    return currentUser?.history?.map((item, index) => (
       <Link
         key={item}
         className={`historyList block text-xl font-thin py-2 px-4 border-black border-[1px] ${
@@ -72,9 +74,9 @@ const History = () => {
             ? "bg-gradient-to-r from-[#09112cc4] to-[transparent] hover:bg-blue-950"
             : "bg-gradient-to-r from-[#4e63b187] to-[transparent] hover:bg-blue-950"
         } hover:underline`}
-        to={`/history/${item}`}
+        to={`/history/${item.id}`}
       >
-        {item}
+      {item.SL_No}:-  {item.Name} in {item.Country} 
       </Link>
     ));
   };
@@ -99,8 +101,8 @@ const History = () => {
             className="w-12 h-12 sm:w-14 sm:h-14"
             alt="Profile"
           />
-          <h2 className="text-2xl sm:text-3xl font-bold">username</h2>
-          <p className="text-lg sm:text-xl mb-1">saksham@example.com</p>
+          <h2 className="text-2xl sm:text-3xl font-bold">{currentUser?.name}</h2>
+          <p className="text-lg sm:text-xl mb-1">{currentUser?.email}</p>
 
           <button
             onClick={changePassword}

@@ -15,9 +15,14 @@ const Dashboard = () => {
   const [Results, setResults] = useState([]);
   const [showSide, setShowSide] = useState(window.innerWidth > 800);
   const navigate = useNavigate();
+  console.log(currentUser);
 
   // Handle company search input
   const changeHandler = (e) => {
+    if(e.target.value===""){
+      setResults([]);
+      setIsCompany(false);
+    }
     setCompany(e.target.value);
     console.log(Company);
   };
@@ -47,14 +52,16 @@ const Dashboard = () => {
   // Handle setting history for a company based on sl_no
   const settingHistory = async (no) => {
     try {
+      console.log(no);
       const Companies = await axios.get(
         `${import.meta.env.VITE_BACKEND_URL}/api/company/fetchall`
       );
+      console.log(Companies);
       const Compwithcomputatn = computation({
         sl_no: no,
         data: Companies.data.companies,
       });
-
+      console.log(Compwithcomputatn);
       const payload = {
         email: currentUser.email,
         newEntry: Compwithcomputatn,
@@ -63,6 +70,7 @@ const Dashboard = () => {
         `${import.meta.env.VITE_BACKEND_URL}/api/user/updateHistory`,
         payload
       );
+      console.log(UpdatedUser);
       setCurrentUser(UpdatedUser.data);
       navigate(`/history/${Compwithcomputatn.id}`);
     } catch (error) {
@@ -70,14 +78,11 @@ const Dashboard = () => {
     }
   };
 
-  
-
   return (
     <div
       className="font-poppins text-white text-[1.7vw] box-border min-h-[100vh]"
       style={{
-        backgroundImage:
-          "linear-gradient(to right, #03045e, #0a1128 )",
+        backgroundImage: "linear-gradient(to right, #03045e, #0a1128 )",
         textShadow: "0 0 2px white",
       }}
     >
@@ -94,15 +99,20 @@ const Dashboard = () => {
         </form>
       </div>
       <div className="main flex">
-
         {/* Main content based on company search */}
         <div className="content flex-1">
-          {!isCompany ? <LeftBarAbsent /> : <LeftBarPresent />}
+          {!isCompany ? (
+            <LeftBarAbsent />
+          ) : (
+            <LeftBarPresent
+              Companies={Results.companies}
+              settingHistory={settingHistory}
+            />
+          )}
         </div>
 
-        <div className="viewSidebar sidetab w-[0vw]">
-          </div>
-          <History />
+        <div className="viewSidebar sidetab w-[0vw]"></div>
+        <History />
       </div>
     </div>
   );

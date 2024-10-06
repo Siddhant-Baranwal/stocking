@@ -1,8 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Login from "./Login";
 import Signup from "./Signup";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthContext";
 
 const Landing = () => {
+  const { currentUser, setCurrentUser } = useContext(AuthContext);
+  const navigate=useNavigate();
+  if(currentUser){
+    navigate("/dashboard");
+  }
   const [isLogin, setIsLogin] = useState(true);
 
   const toggleForm = () => {
