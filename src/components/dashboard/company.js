@@ -34,16 +34,30 @@ export const computation = (params) => {
     companyData.expensePercentChange = change(companyData.Expenses);
 
     // Number of companies having greater stock price, market share, revenue and expense globally.
-    companyData.gtrStockGlobal = data.filter(item => item.Stock_Price[9]>companyData.Stock_Price[9]).length;
-    companyData.gtrMarketGlobal = data.filter(item => item.Market_Share[9]>companyData.Market_Share[9]).length;
-    companyData.gtrRevenueGlobal = data.filter(item => item.Revenue[9]>companyData.Revenue[9]).length;
-    companyData.gtrExpenseGlobal = data.filter(item => item.Expenses[9]>companyData.Expenses[9]).length;
+    companyData.gtrStockGlobal = [];
+    companyData.gtrMarketGlobal = [];
+    companyData.gtrRevenueGlobal = [];
+    companyData.gtrExpenseGlobal = [];
+
+    for (let i = 0; i <= 9; i++) {
+        companyData.gtrStockGlobal[i] = data.filter(item => item.Stock_Price[i] > companyData.Stock_Price[i]).length;
+        companyData.gtrMarketGlobal[i] = data.filter(item => item.Market_Share[i] > companyData.Market_Share[i]).length;
+        companyData.gtrRevenueGlobal[i] = data.filter(item => item.Revenue[i] > companyData.Revenue[i]).length;
+        companyData.gtrExpenseGlobal[i] = data.filter(item => item.Expenses[i] > companyData.Expenses[i]).length;
+    }
 
     // Number of companies having greater stock price, market share, revenue and expense domestically.
-    companyData.gtrStockDomestic = data.filter(item => item.Stock_Price[9]>companyData.Stock_Price[9] && item.Country===companyData.Country).length;
-    companyData.gtrMarketDomestic = data.filter(item => item.Market_Share[9]>companyData.Market_Share[9] && item.Country===companyData.Country).length;
-    companyData.gtrRevenueDomestic = data.filter(item => item.Revenue[9]>companyData.Revenue[9] && item.Country===companyData.Country).length;
-    companyData.gtrExpenseDomestic = data.filter(item => item.Expenses[9]>companyData.Expenses[9] && item.Country===companyData.Country).length;
+    companyData.gtrStockDomestic = [];
+    companyData.gtrMarketDomestic = [];
+    companyData.gtrRevenueDomestic = [];
+    companyData.gtrExpenseDomestic = [];
+
+    for (let i = 0; i <= 9; i++) {
+        companyData.gtrStockDomestic[i] = data.filter(item => item.Stock_Price[i] > companyData.Stock_Price[i] && item.Country === companyData.Country).length;
+        companyData.gtrMarketDomestic[i] = data.filter(item => item.Market_Share[i] > companyData.Market_Share[i] && item.Country === companyData.Country).length;
+        companyData.gtrRevenueDomestic[i] = data.filter(item => item.Revenue[i] > companyData.Revenue[i] && item.Country === companyData.Country).length;
+        companyData.gtrExpenseDomestic[i] = data.filter(item => item.Expenses[i] > companyData.Expenses[i] && item.Country === companyData.Country).length;
+    }
 
     // A general number for company's growth. If growth=1, then decline. If growth=2, then stable. Else, growth.
     companyData.growth = sumPositive(companyData.stockPercentChange) + sumPositive(companyData.marketPercentChange) + sumPositive(companyData.revenuePercentChange) + sumPositive(companyData.expensePercentChange);
