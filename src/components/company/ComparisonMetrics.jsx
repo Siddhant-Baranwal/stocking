@@ -23,7 +23,7 @@ const ComparisonMetrics = ({ isDarkMode, toggleTheme }) => {
     },
     yAxis: {
       title: {
-        text: "Number of Employees",
+        text: "Rank(or position)",
       },
       gridLineWidth: 0,
       lineWidth: 1,
@@ -34,8 +34,8 @@ const ComparisonMetrics = ({ isDarkMode, toggleTheme }) => {
       {
         name: "Installation & Developers",
         data: [
-          43934, 48656, 65165, 81827, 112143, 142383, 171533, 165174, 155157,
-          161454, 154610, 168960, 171558,
+          43934, 48656, 65165, 81827, 112143, 74230, 171533, 165174, 155157,
+          161454, 154610, 168960, 100758,
         ],
         color: "rgb(24,254,254)",
         fillColor: {
@@ -80,7 +80,7 @@ const ComparisonMetrics = ({ isDarkMode, toggleTheme }) => {
       plotBorderColor: "transparent",
     },
     title: {
-      text: "Market-Cap",
+      text: "Market-Share",
       align: "center",
       style: {
         color: "rgba(216,210,250,1)",
@@ -93,7 +93,7 @@ const ComparisonMetrics = ({ isDarkMode, toggleTheme }) => {
     },
     yAxis: {
       title: {
-        text: "Number of Employees",
+        text: "Rank( or position)",
       },
       gridLineWidth: 0,
       lineWidth: 1,
@@ -150,7 +150,7 @@ const ComparisonMetrics = ({ isDarkMode, toggleTheme }) => {
       plotBorderColor: "transparent",
     },
     title: {
-      text: "Market-Cap",
+      text: "Revenue",
       align: "center",
       style: {
         color: "rgba(216,210,250,1)",
@@ -163,7 +163,7 @@ const ComparisonMetrics = ({ isDarkMode, toggleTheme }) => {
     },
     yAxis: {
       title: {
-        text: "Number of Employees",
+        text: "Rank(or position)",
       },
       gridLineWidth: 0,
       lineWidth: 1,
@@ -220,7 +220,7 @@ const ComparisonMetrics = ({ isDarkMode, toggleTheme }) => {
       plotBorderColor: "transparent",
     },
     title: {
-      text: "Market-Cap",
+      text: "Expenses",
       align: "center",
       style: {
         color: "rgba(216,210,250,1)",
@@ -233,7 +233,7 @@ const ComparisonMetrics = ({ isDarkMode, toggleTheme }) => {
     },
     yAxis: {
       title: {
-        text: "Number of Employees",
+        text: "Rank (or Position)",
       },
       gridLineWidth: 0,
       lineWidth: 1,

@@ -589,7 +589,7 @@ const CompanyDashboard = ({ isDarkMode, toggleTheme }) => {
           <DynamicChart id="mainGraph" chartData={chartData1} />
         </div>
       </div>
-      <div className="sub-graphs flex justify-center items-center gap-x-2 px-3 py-3  h-[36%]">
+      <div className="sub-graphs flex-row xl:flex justify-center items-center gap-x-2 px-3 py-3  h-[36%]">
         <div
           id="sub-graph1"
           onClick={() =>
